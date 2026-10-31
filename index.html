@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CashAudit Apple Liquid - Kiểm Quỹ Chuyên Nghiệp (Tối ưu Epson TM-T8)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CashAudit Apple Liquid - Kiểm Quỹ Chuyên Nghiệp (Tối ưu Di Động & Epson TM-T8)</title>
   
   <!-- Apple-inspired typography: SF Pro / Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,14 +61,14 @@
 
     /* Apple Liquid Glass Effect */
     .liquid-glass {
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(28px) saturate(190%);
       -webkit-backdrop-filter: blur(28px) saturate(190%);
       border: 1px solid rgba(255, 255, 255, 0.85);
     }
 
     .liquid-glass-subtle {
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.7);
@@ -150,11 +150,24 @@
       background-size: 14px 14px;
     }
 
+    /* Smooth touch scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Safe Area padding for iOS Home bar & floating bottom dock */
+    body {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 95px);
+    }
+
     /* ============================================================
        QUY CHUẨN IN MÁY IN BILL NHIỆT EPSON TM-T82 / TM-T88 (80MM)
        ============================================================ */
     @media print {
-      /* Định dạng chuẩn cuộn nhiệt 80mm EPSON TM-T8 */
       @page {
         size: 80mm auto;
         margin: 0;
@@ -174,14 +187,13 @@
         display: none !important;
       }
 
-      /* Ẩn toàn bộ giao diện app khi in, CHỈ IN DUY NHẤT BILL NHIỆT */
-      #appMainInterface {
+      #appMainInterface, #mobileBottomDock {
         display: none !important;
       }
 
       #epsonThermalReceiptPrint {
         display: block !important;
-        width: 72mm !important; /* Vùng in thực tế hiệu dụng của máy 80mm Epson */
+        width: 72mm !important;
         margin: 0 auto !important;
         padding: 4mm 2mm 8mm 2mm !important;
         font-size: 11px !important;
@@ -220,13 +232,12 @@
       }
     }
 
-    /* Ở chế độ web bình thường thì ẩn vùng in bill nhiệt ngầm */
     #epsonThermalReceiptPrint {
       display: none;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-sky-500 selection:text-white antialiased pb-24">
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-sky-500 selection:text-white antialiased">
 
   <!-- Ambient Light Orbs -->
   <div class="orb-bg">
@@ -240,47 +251,48 @@
     
     <!-- TOP NAVIGATION BAR (APPLE LIQUID STYLE) -->
     <header class="sticky top-0 z-40 liquid-glass border-b border-white/80 shadow-sm transition-all duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
         
         <!-- Brand / Logo -->
-        <div class="flex items-center gap-3.5">
-          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/25 text-white">
-            <i data-lucide="wallet" class="w-6 h-6"></i>
+        <div class="flex items-center gap-2.5 sm:gap-3.5">
+          <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-md sm:shadow-lg shadow-sky-500/25 text-white shrink-0">
+            <i data-lucide="wallet" class="w-5 h-5 sm:w-6 sm:h-6"></i>
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <h1 class="text-base sm:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
                 CashAudit
-                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 border border-sky-200/80">Liquid Pro</span>
+                <span class="text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 border border-sky-200/80">Liquid</span>
               </h1>
             </div>
-            <p class="text-xs text-slate-500 font-medium">Hệ thống kiểm kê quỹ tiền mặt • Thiết kế phong cách Apple</p>
+            <p class="text-[10px] sm:text-xs text-slate-500 font-medium hidden sm:block">Hệ thống kiểm kê quỹ tiền mặt • Thiết kế phong cách Apple</p>
           </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 sm:gap-2">
           
           <!-- Sound toggle -->
-          <button id="btnSoundToggle" onclick="toggleSound()" class="p-2.5 rounded-full liquid-glass-subtle hover:bg-white text-slate-600 hover:text-slate-900 transition shadow-sm border border-slate-200/60" title="Bật/Tắt âm thanh thao tác">
+          <button id="btnSoundToggle" onclick="toggleSound()" class="p-2 sm:p-2.5 rounded-full liquid-glass-subtle hover:bg-white text-slate-600 transition shadow-xs border border-slate-200/60" title="Bật/Tắt âm thanh thao tác">
             <i data-lucide="volume-2" id="soundIcon" class="w-4 h-4 text-emerald-600"></i>
           </button>
 
-          <!-- Sao chép báo cáo -->
-          <button onclick="copyAuditReport()" class="px-3.5 py-2 rounded-full liquid-glass hover:bg-white text-slate-700 hover:text-sky-600 transition text-xs font-semibold flex items-center gap-1.5 shadow-sm border border-slate-200/70" title="Sao chép báo cáo gửi Zalo / Telegram">
+          <!-- Sao chép báo cáo (Desktop) -->
+          <button onclick="copyAuditReport()" class="hidden sm:flex px-3.5 py-2 rounded-full liquid-glass hover:bg-white text-slate-700 hover:text-sky-600 transition text-xs font-semibold items-center gap-1.5 shadow-sm border border-slate-200/70" title="Sao chép báo cáo gửi Zalo / Telegram">
             <i data-lucide="copy" class="w-4 h-4 text-sky-500"></i>
-            <span class="hidden md:inline">Sao chép</span>
+            <span>Sao chép</span>
           </button>
 
-          <!-- NÚT IN TỐI ƯU CHO EPSON TM-T8 (TRỌNG TÂM ĐỀ BÀI) -->
-          <button onclick="openEpsonReceiptModal()" class="px-4 py-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-sky-500/25 hover:shadow-lg transition transform active:scale-95" title="In bill nhiệt cho máy Epson TM-T82 / TM-T88 (80mm)">
-            <i data-lucide="printer" class="w-4 h-4"></i>
-            <span>In Bill Epson TM-T8</span>
-            <span class="px-1.5 py-0.2 text-[10px] bg-white/20 rounded-md font-mono">80mm</span>
+          <!-- NÚT IN TỐI ƯU CHO EPSON TM-T8 -->
+          <button onclick="openEpsonReceiptModal()" class="px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 active:scale-95 text-white font-semibold text-xs flex items-center gap-1.5 sm:gap-2 shadow-md shadow-sky-500/25 transition" title="In bill nhiệt cho máy Epson TM-T82 / TM-T88 (80mm)">
+            <i data-lucide="printer" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+            <span class="hidden sm:inline">In Bill Epson TM-T8</span>
+            <span class="sm:hidden font-bold">In Bill</span>
+            <span class="px-1.5 py-0.2 text-[9px] sm:text-[10px] bg-white/20 rounded font-mono">80mm</span>
           </button>
 
           <!-- Làm mới -->
-          <button onclick="confirmResetAll()" class="p-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/70 transition shadow-sm" title="Làm mới bảng kiểm quỹ">
+          <button onclick="confirmResetAll()" class="p-2 sm:p-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/70 transition shadow-xs" title="Làm mới bảng kiểm quỹ">
             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
           </button>
 
@@ -289,192 +301,200 @@
     </header>
 
     <!-- MAIN BODY -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 space-y-7">
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-7 space-y-4 sm:space-y-7">
 
       <!-- TOP GRID: THÔNG TIN PHIÊN & DÒNG TIỀN MỤC TIÊU -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
 
         <!-- THÔNG TIN PHIÊN (5 Cột) -->
-        <div class="lg:col-span-5 liquid-glass rounded-3xl p-6 shadow-liquid relative overflow-hidden transition-all duration-300">
-          <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
-            <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
+        <div class="lg:col-span-5 liquid-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-liquid relative overflow-hidden transition-all duration-300">
+          <div class="flex items-center justify-between pb-3 sm:pb-3.5 mb-3 sm:mb-4 border-b border-slate-100">
+            <div class="flex items-center gap-2 text-slate-800 font-bold text-xs sm:text-sm">
               <span class="p-1.5 rounded-xl bg-sky-50 text-sky-600">
-                <i data-lucide="user-check" class="w-4 h-4"></i>
+                <i data-lucide="user-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
               </span>
               <span>Phiên kiểm quỹ</span>
             </div>
-            <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-600 font-mono text-xs font-semibold shadow-xs border border-slate-200/50">
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-slate-600 font-mono text-[11px] sm:text-xs font-semibold shadow-xs border border-slate-200/50">
               <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <span id="liveClock">--:--:--</span>
             </div>
           </div>
 
-          <div class="space-y-3.5 text-xs">
+          <div class="space-y-2.5 sm:space-y-3.5 text-xs">
             <div>
               <label class="font-semibold text-slate-600 block mb-1">Thu ngân / Người kiểm</label>
               <div class="relative">
-                <input type="text" id="auditorName" value="Nguyễn Văn A" class="w-full bg-white/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs">
-                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3"></i>
+                <input type="text" id="auditorName" value="Nguyễn Văn A" class="w-full bg-white/90 border border-slate-200 rounded-xl sm:rounded-2xl px-3.5 py-2 sm:py-2.5 text-sm text-slate-900 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/10 transition shadow-xs">
+                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute right-3.5 top-2.5 sm:top-3"></i>
               </div>
             </div>
 
             <div>
               <label class="font-semibold text-slate-600 block mb-1">Ca làm / Quầy thu ngân</label>
               <div class="relative">
-                <input type="text" id="shiftName" value="Ca Sáng - Quầy 01 (Epson TM-T8)" class="w-full bg-white/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs">
-                <i data-lucide="store" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3"></i>
+                <input type="text" id="shiftName" value="Ca Sáng - Quầy 01 (Epson TM-T8)" class="w-full bg-white/90 border border-slate-200 rounded-xl sm:rounded-2xl px-3.5 py-2 sm:py-2.5 text-sm text-slate-900 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/10 transition shadow-xs">
+                <i data-lucide="store" class="w-4 h-4 text-slate-400 absolute right-3.5 top-2.5 sm:top-3"></i>
               </div>
             </div>
 
             <div>
               <label class="font-semibold text-slate-600 block mb-1">Ghi chú giải trình chênh lệch</label>
-              <input type="text" id="auditNotes" placeholder="VD: Khách boa, thừa tiền lẻ, trả tiền cọc..." class="w-full bg-white/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs">
+              <input type="text" id="auditNotes" placeholder="VD: Khách boa, thừa tiền lẻ, trả cọc..." class="w-full bg-white/90 border border-slate-200 rounded-xl sm:rounded-2xl px-3.5 py-2 sm:py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/10 transition shadow-xs">
             </div>
           </div>
         </div>
 
         <!-- DÒNG TIỀN CẦN KIỂM TRA (SỔ SÁCH POS) (7 Cột) -->
-        <div class="lg:col-span-7 liquid-glass rounded-3xl p-6 shadow-liquid flex flex-col justify-between relative overflow-hidden transition-all duration-300">
+        <div class="lg:col-span-7 liquid-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-liquid flex flex-col justify-between relative overflow-hidden transition-all duration-300">
           <div>
-            <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between pb-3 sm:pb-3.5 mb-3 sm:mb-4 border-b border-slate-100">
               <div class="flex items-center gap-2">
                 <span class="p-1.5 rounded-xl bg-blue-50 text-blue-600">
-                  <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                  <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                 </span>
-                <span class="text-sm font-bold text-slate-900">Dòng tiền cần kiểm tra (Sổ sách / POS)</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-900">Dòng tiền cần kiểm tra (Sổ sách)</span>
               </div>
-              <span class="text-[11px] font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100">Mục tiêu đối soát</span>
+              <span class="text-[10px] sm:text-[11px] font-bold text-sky-600 bg-sky-50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-sky-100">Mục tiêu</span>
             </div>
 
             <label for="expectedAmountInput" class="text-xs font-semibold text-slate-500 block mb-1.5">
-              Nhập số tiền phần mềm POS / Doanh thu hệ thống ghi nhận:
+              Số tiền phần mềm POS / Doanh thu hệ thống ghi nhận:
             </label>
 
             <div class="relative">
               <input 
                 type="text" 
+                inputmode="numeric"
+                pattern="[0-9]*"
                 id="expectedAmountInput" 
                 placeholder="0"
                 autocomplete="off"
                 oninput="handleExpectedAmountInput(this)"
-                class="w-full bg-white border-2 border-slate-200/80 rounded-2xl px-5 py-4 text-2xl sm:text-3xl font-extrabold font-mono text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-sm pr-16"
+                class="w-full bg-white border-2 border-slate-200/80 rounded-xl sm:rounded-2xl px-4 py-3 sm:px-5 sm:py-4 text-xl sm:text-3xl font-extrabold font-mono text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-sm pr-14 sm:pr-16"
               >
-              <div class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold font-mono text-sm tracking-wide">
+              <div class="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold font-mono text-xs sm:text-sm tracking-wide">
                 VNĐ
               </div>
             </div>
           </div>
 
-          <!-- Phím chọn nhanh tiện lợi -->
-          <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2 text-xs">
-            <span class="text-slate-500 font-medium flex items-center gap-1">
+          <!-- Phím chọn nhanh tiện lợi (Cuộn ngang êm ái trên điện thoại) -->
+          <div class="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2 text-xs">
+            <span class="text-slate-500 font-medium flex items-center gap-1 shrink-0">
               <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-500"></i>
-              Chọn nhanh số tiền:
+              <span class="hidden sm:inline">Chọn nhanh:</span>
             </span>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <button onclick="setExpectedQuick(2000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">2.000.000</button>
-              <button onclick="setExpectedQuick(5000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">5.000.000</button>
-              <button onclick="setExpectedQuick(10000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">10.000.000</button>
-              <button onclick="setExpectedQuick(20000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">20.000.000</button>
-              <button onclick="setExpectedQuick(0)" class="px-2.5 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 font-medium border border-rose-200/80 transition">Xóa</button>
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 flex-nowrap">
+              <button onclick="setExpectedQuick(2000000)" class="px-2.5 py-1 rounded-lg sm:rounded-xl bg-white hover:bg-slate-100 active:scale-95 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-2xs transition shrink-0">2M</button>
+              <button onclick="setExpectedQuick(5000000)" class="px-2.5 py-1 rounded-lg sm:rounded-xl bg-white hover:bg-slate-100 active:scale-95 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-2xs transition shrink-0">5M</button>
+              <button onclick="setExpectedQuick(10000000)" class="px-2.5 py-1 rounded-lg sm:rounded-xl bg-white hover:bg-slate-100 active:scale-95 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-2xs transition shrink-0">10M</button>
+              <button onclick="setExpectedQuick(20000000)" class="px-2.5 py-1 rounded-lg sm:rounded-xl bg-white hover:bg-slate-100 active:scale-95 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-2xs transition shrink-0">20M</button>
+              <button onclick="setExpectedQuick(0)" class="px-2 py-1 rounded-lg sm:rounded-xl bg-rose-50 hover:bg-rose-100 active:scale-95 text-rose-600 font-medium border border-rose-200/80 transition shrink-0">Xóa</button>
             </div>
           </div>
         </div>
 
       </section>
 
-      <!-- ALERT BANNER: TRẠNG THÁI CHÊNH LỆCH QUỸ (APPLE CARD LIQUID) -->
-      <section id="alertBanner" class="rounded-3xl transition-all duration-500 p-6 shadow-liquid border relative overflow-hidden bg-white/90 border-slate-200/80">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <!-- ALERT BANNER: TRẠNG THÁI CHÊNH LỆCH QUỸ -->
+      <section id="alertBanner" class="rounded-2xl sm:rounded-3xl transition-all duration-500 p-4 sm:p-6 shadow-liquid border relative overflow-hidden bg-white/90 border-slate-200/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
           
           <!-- Thông tin trạng thái chính -->
-          <div class="flex items-start sm:items-center gap-4.5">
-            <div id="statusIconBox" class="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-slate-100 text-slate-500 transition-all duration-300">
-              <i data-lucide="scale" id="statusIcon" class="w-8 h-8"></i>
+          <div class="flex items-start sm:items-center gap-3.5 sm:gap-4.5">
+            <div id="statusIconBox" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-slate-100 text-slate-500 transition-all duration-300">
+              <i data-lucide="scale" id="statusIcon" class="w-6 h-6 sm:w-8 sm:h-8"></i>
             </div>
 
             <div>
               <div class="flex items-center gap-2 flex-wrap">
-                <span id="statusBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-200">
+                <span id="statusBadge" class="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-200">
                   Đang chờ kiểm đếm
                 </span>
                 <span id="diffPercentage" class="text-xs font-mono font-semibold text-slate-500"></span>
               </div>
-              <h2 id="statusHeadline" class="text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-slate-900">
+              <h2 id="statusHeadline" class="text-lg sm:text-2xl font-extrabold tracking-tight mt-1 sm:mt-1.5 text-slate-900 leading-snug">
                 Nhập số lượng tờ của từng loại tiền
               </h2>
-              <p id="statusDesc" class="text-xs sm:text-sm text-slate-500 mt-0.5 leading-relaxed">
+              <p id="statusDesc" class="text-xs sm:text-sm text-slate-500 mt-0.5 leading-relaxed hidden sm:block">
                 Hệ thống tự động tính thành tiền, tổng thực tế và báo động chênh lệch so với dòng tiền cần kiểm tra.
               </p>
             </div>
           </div>
 
-          <!-- 3 Thẻ số liệu tương phản cao -->
-          <div class="grid grid-cols-3 gap-3 sm:gap-6 border-t md:border-t-0 md:border-l border-slate-200/80 pt-4 md:pt-0 md:pl-8 shrink-0">
+          <!-- 3 Thẻ số liệu tương phản cao (Dễ nhìn trên điện thoại) -->
+          <div class="grid grid-cols-3 gap-2 sm:gap-6 border-t md:border-t-0 md:border-l border-slate-200/80 pt-3 md:pt-0 md:pl-8 shrink-0">
             <!-- Sổ sách -->
             <div class="text-left md:text-right">
-              <div class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Tiền Sổ Sách</div>
-              <div id="displayExpectedAmount" class="text-lg sm:text-xl font-mono font-bold text-sky-600 mt-0.5">0 ₫</div>
+              <div class="text-[10px] sm:text-[11px] uppercase font-bold text-slate-400 tracking-wider">Sổ Sách</div>
+              <div id="displayExpectedAmount" class="text-sm sm:text-xl font-mono font-bold text-sky-600 mt-0.5">0 ₫</div>
             </div>
 
             <!-- Thực tế -->
-            <div class="text-left md:text-right">
-              <div class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Tiền Thực Đếm</div>
-              <div id="displayActualAmount" class="text-lg sm:text-xl font-mono font-bold text-slate-900 mt-0.5">0 ₫</div>
+            <div class="text-center md:text-right">
+              <div class="text-[10px] sm:text-[11px] uppercase font-bold text-slate-400 tracking-wider">Thực Đếm</div>
+              <div id="displayActualAmount" class="text-sm sm:text-xl font-mono font-bold text-slate-900 mt-0.5">0 ₫</div>
             </div>
 
             <!-- Chênh lệch -->
-            <div class="text-left md:text-right">
-              <div class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Chênh Lệch</div>
-              <div id="displayDiffAmount" class="text-lg sm:text-xl font-mono font-bold text-slate-600 mt-0.5">0 ₫</div>
+            <div class="text-right">
+              <div class="text-[10px] sm:text-[11px] uppercase font-bold text-slate-400 tracking-wider">Chênh Lệch</div>
+              <div id="displayDiffAmount" class="text-sm sm:text-xl font-mono font-bold text-slate-600 mt-0.5">0 ₫</div>
             </div>
           </div>
 
         </div>
 
         <!-- Thanh đo lường tiến độ -->
-        <div class="mt-5 pt-3.5 border-t border-slate-100">
+        <div class="mt-3.5 sm:mt-5 pt-3 sm:pt-3.5 border-t border-slate-100">
           <div class="flex justify-between text-xs text-slate-500 mb-1.5 font-medium">
             <span>Tiến độ đối soát dòng tiền:</span>
             <span id="progressText" class="font-mono font-bold text-slate-700">0%</span>
           </div>
-          <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
+          <div class="w-full h-2 sm:h-2.5 rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
             <div id="progressBar" class="h-full bg-sky-500 rounded-full transition-all duration-300 w-0"></div>
           </div>
         </div>
       </section>
 
-      <!-- TABLE: BẢNG KIỂM ĐẾM 10 MỆNH GIÁ TIỀN VIỆT NAM -->
-      <section class="liquid-glass rounded-3xl shadow-liquid border border-white/90 overflow-hidden">
+      <!-- SECTION: BẢNG KIỂM ĐẾM 10 MỆNH GIÁ TIỀN VIỆT NAM (TỐI ƯU CẢ MOBILE & DESKTOP) -->
+      <section class="liquid-glass rounded-2xl sm:rounded-3xl shadow-liquid border border-white/90 overflow-hidden">
         
-        <div class="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <!-- Header bảng -->
+        <div class="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between gap-2">
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-              <span class="p-1.5 rounded-xl bg-emerald-50 text-emerald-600">
-                <i data-lucide="banknote" class="w-5 h-5"></i>
+            <h3 class="text-sm sm:text-lg font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2">
+              <span class="p-1 sm:p-1.5 rounded-xl bg-emerald-50 text-emerald-600">
+                <i data-lucide="banknote" class="w-4 h-4 sm:w-5 sm:h-5"></i>
               </span>
-              <span>Bảng kiểm kê 10 mệnh giá tiền Việt Nam</span>
+              <span>Kiểm đếm 10 mệnh giá VNĐ</span>
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5 font-medium">Phím Enter để nhảy nhanh sang mệnh giá kế tiếp • Bấm +100 để cộng nhanh 1 thếp</p>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5 hidden sm:block">Chạm các nút +/- hoặc phím số để nhập nhanh số tờ</p>
           </div>
 
-          <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+          <div class="flex items-center gap-1.5 sm:gap-2.5">
             <!-- Sắp xếp -->
-            <button onclick="toggleSortOrder()" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 border border-slate-200 shadow-xs flex items-center gap-1.5 transition">
+            <button onclick="toggleSortOrder()" class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-white hover:bg-slate-50 active:scale-95 text-xs font-semibold text-slate-700 border border-slate-200 shadow-2xs flex items-center gap-1 transition">
               <i data-lucide="arrow-down-up" class="w-3.5 h-3.5 text-slate-500"></i>
-              <span id="sortOrderLabel">Cao &rarr; Thấp</span>
+              <span id="sortOrderLabel" class="text-[11px] sm:text-xs">Cao &rarr; Thấp</span>
             </button>
             
             <!-- Xóa số tờ -->
-            <button onclick="clearAllDenominations()" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-rose-50 text-xs font-semibold text-rose-600 border border-slate-200 hover:border-rose-200 shadow-xs flex items-center gap-1.5 transition">
+            <button onclick="clearAllDenominations()" class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-white hover:bg-rose-50 active:scale-95 text-xs font-semibold text-rose-600 border border-slate-200 hover:border-rose-200 shadow-2xs flex items-center gap-1 transition">
               <i data-lucide="eraser" class="w-3.5 h-3.5"></i>
-              <span>Xóa số tờ</span>
+              <span class="hidden sm:inline">Xóa số tờ</span>
             </button>
           </div>
         </div>
 
-        <!-- Bảng danh sách mệnh giá -->
-        <div class="overflow-x-auto">
+        <!-- 1. GIAO DIỆN DI ĐỘNG: CÁC THẺ MỆNH GIÁ CẢM ỨNG (MOBILE TOUCH CARDS) -->
+        <div id="denominationMobileCards" class="block md:hidden p-3 space-y-2.5">
+          <!-- Render động cho màn hình điện thoại -->
+        </div>
+
+        <!-- 2. GIAO DIỆN DESKTOP / TABLET (TABLE VIEW) -->
+        <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] uppercase tracking-wider text-slate-500 font-bold">
@@ -487,7 +507,7 @@
               </tr>
             </thead>
             <tbody id="denominationTableBody" class="divide-y divide-slate-100 font-mono text-sm">
-              <!-- Render động bằng JavaScript -->
+              <!-- Render động cho máy tính -->
             </tbody>
             <tfoot class="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-t-2 border-slate-200 font-bold">
               <tr>
@@ -511,16 +531,27 @@
           </table>
         </div>
 
-        <!-- Thanh phân bổ tỷ trọng (Breakdown bar) -->
-        <div class="p-5 border-t border-slate-100 bg-white/50">
-          <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span class="flex items-center gap-1.5 font-semibold text-slate-700">
-              <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-sky-500"></i>
-              Tỷ trọng các mệnh giá trong quỹ thực tế:
-            </span>
-            <span id="breakdownLegendText" class="text-slate-400">Chưa có dữ liệu</span>
+        <!-- Footer tóm tắt cho Mobile -->
+        <div class="p-3.5 border-t border-slate-100 bg-slate-50/80 md:hidden flex items-center justify-between">
+          <div>
+            <div class="text-[11px] uppercase font-bold text-slate-500">Tổng tiền thực đếm:</div>
+            <div class="text-xs text-slate-400 font-mono"><span id="mobTotalBillsFooter">0</span> tờ tiền</div>
           </div>
-          <div id="breakdownBar" class="h-3 w-full rounded-full bg-slate-100 border border-slate-200/80 flex overflow-hidden">
+          <div class="text-right">
+            <div class="text-xl font-bold font-mono text-slate-900"><span id="mobTotalAmountFooter">0</span> ₫</div>
+          </div>
+        </div>
+
+        <!-- Thanh phân bổ tỷ trọng (Breakdown bar) -->
+        <div class="p-3.5 sm:p-5 border-t border-slate-100 bg-white/50">
+          <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mb-1.5 sm:mb-2">
+            <span class="flex items-center gap-1 font-semibold text-slate-700">
+              <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-sky-500"></i>
+              Tỷ trọng mệnh giá:
+            </span>
+            <span id="breakdownLegendText" class="text-slate-400 truncate max-w-[200px]">Chưa có dữ liệu</span>
+          </div>
+          <div id="breakdownBar" class="h-2.5 sm:h-3 w-full rounded-full bg-slate-100 border border-slate-200/80 flex overflow-hidden">
             <!-- Render các đoạn màu tỷ lệ -->
           </div>
         </div>
@@ -528,54 +559,49 @@
       </section>
 
       <!-- BOTTOM SECTION: LỊCH SỬ KIỂM QUỸ & QUY CHUẨN MÁY IN EPSON TM-T8 -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         
         <!-- Hướng dẫn máy in Epson TM-T8 (5 Cột) -->
-        <div class="lg:col-span-5 liquid-glass rounded-3xl p-6 shadow-liquid flex flex-col justify-between">
+        <div class="lg:col-span-5 liquid-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-liquid flex flex-col justify-between">
           <div>
-            <div class="flex items-center gap-2.5 mb-4 text-slate-900 font-bold text-sm">
-              <span class="p-2 rounded-2xl bg-amber-50 text-amber-600">
-                <i data-lucide="printer-check" class="w-5 h-5"></i>
+            <div class="flex items-center gap-2 mb-3 text-slate-900 font-bold text-xs sm:text-sm">
+              <span class="p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-amber-50 text-amber-600">
+                <i data-lucide="printer-check" class="w-4 h-4 sm:w-5 sm:h-5"></i>
               </span>
-              <span>Tối ưu hóa Máy In Nhiệt Epson TM-T8</span>
+              <span>Máy In Nhiệt Epson TM-T8 (80mm)</span>
             </div>
 
-            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
-              <div class="p-3.5 rounded-2xl bg-white border border-slate-200/70 shadow-xs">
-                <strong class="text-slate-900 block mb-1">Khổ giấy tiêu chuẩn 80mm:</strong>
-                Tương thích hoàn hảo với dòng máy Epson TM-T82, TM-T82II, TM-T82III, TM-T88IV, TM-T88V, TM-T88VI và các máy in bill nhiệt cổng USB/LAN phổ biến.
-              </div>
-
-              <div class="p-3.5 rounded-2xl bg-white border border-slate-200/70 shadow-xs">
-                <strong class="text-slate-900 block mb-1">Thiết kế đơn sắc siêu nét:</strong>
-                Được căn chỉnh chính xác chiều rộng 72mm (576 dots), font chữ đơn cách (Monospace) rõ nét, không bị nhòe mực nhiệt và hỗ trợ lệnh cắt giấy tự động.
+            <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
+              <div class="p-3 rounded-xl sm:rounded-2xl bg-white border border-slate-200/70 shadow-2xs">
+                <strong class="text-slate-900 block mb-0.5">Tương thích hoàn hảo:</strong>
+                Các dòng Epson TM-T82, TM-T82III, TM-T88V, TM-T88VI khổ giấy 80mm in qua WiFi/LAN hoặc dây USB.
               </div>
             </div>
           </div>
 
-          <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-400">Xem trước hóa đơn nhiệt:</span>
-            <button onclick="openEpsonReceiptModal()" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 transition">
+          <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-400">Xem trước hóa đơn:</span>
+            <button onclick="openEpsonReceiptModal()" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 transition">
               <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-              Mở bản xem trước
+              Mở bản xem
             </button>
           </div>
         </div>
 
         <!-- Lịch sử kiểm quỹ gần đây (7 Cột) -->
-        <div class="lg:col-span-7 liquid-glass rounded-3xl p-6 shadow-liquid flex flex-col justify-between">
+        <div class="lg:col-span-7 liquid-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-liquid flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
-              <div class="flex items-center gap-2 text-slate-900 font-bold text-sm">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+              <div class="flex items-center gap-1.5 sm:gap-2 text-slate-900 font-bold text-xs sm:text-sm">
                 <span class="p-1.5 rounded-xl bg-purple-50 text-purple-600">
-                  <i data-lucide="history" class="w-4 h-4"></i>
+                  <i data-lucide="history" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                 </span>
-                <span>Lịch sử kiểm quỹ trên máy</span>
+                <span>Lịch sử kiểm quỹ gần đây</span>
               </div>
-              <div class="flex items-center gap-2">
-                <button onclick="saveCurrentSession()" class="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center gap-1 shadow-sm transition">
-                  <i data-lucide="save" class="w-3.5 h-3.5"></i>
-                  Lưu phiên này
+              <div class="flex items-center gap-1.5">
+                <button onclick="saveCurrentSession()" class="px-2.5 sm:px-3 py-1 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center gap-1 shadow-xs transition">
+                  <i data-lucide="save" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
+                  Lưu phiên
                 </button>
                 <button onclick="clearHistory()" class="text-slate-400 hover:text-rose-500 text-xs transition" title="Xóa toàn bộ">
                   Xóa
@@ -583,13 +609,13 @@
               </div>
             </div>
 
-            <div id="historyListContainer" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+            <div id="historyListContainer" class="space-y-2 max-h-52 overflow-y-auto pr-1">
               <!-- Render danh sách lịch sử -->
             </div>
           </div>
 
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-            <span>Dữ liệu được lưu trữ tự động trong trình duyệt này.</span>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+            <span>Lưu trên trình duyệt này.</span>
             <span id="historyCount" class="font-mono font-semibold">0 bản ghi</span>
           </div>
         </div>
@@ -599,19 +625,47 @@
     </main>
   </div>
 
+  <!-- FLOATING LIQUID DOCK CHO DI ĐỘNG (APPLE DOCK ON MOBILE) -->
+  <div id="mobileBottomDock" class="fixed bottom-3 inset-x-3 md:hidden z-40 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/90 transition-all duration-300">
+    <div class="flex items-center justify-between gap-2">
+      <!-- Click để cuộn lên trên cùng xem toàn cảnh -->
+      <div onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-1 cursor-pointer pl-1.5">
+        <div class="text-[10px] text-slate-500 font-medium flex items-center gap-1">
+          <span>Thực đếm:</span>
+          <span id="mobDockBills" class="text-slate-400 font-mono">(0 tờ)</span>
+        </div>
+        <div class="flex items-center gap-1.5 mt-0.5">
+          <span id="mobDockActual" class="font-mono font-extrabold text-sm text-slate-900">0 ₫</span>
+          <span id="mobDockBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">Chờ đếm</span>
+        </div>
+      </div>
+      
+      <!-- Nút hành động nhanh -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button onclick="copyAuditReport()" class="p-2.5 rounded-xl bg-white hover:bg-slate-50 active:scale-90 text-slate-700 border border-slate-200 shadow-xs transition" title="Sao chép báo cáo gửi Zalo">
+          <i data-lucide="copy" class="w-4 h-4 text-sky-500"></i>
+        </button>
+        <button onclick="openEpsonReceiptModal()" class="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 active:scale-95 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-sky-500/20" title="In bill Epson TM-T8">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>In Bill</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL XEM TRƯỚC VÀ IN BILL NHIỆT EPSON TM-T8 (80MM) -->
-  <div id="epsonReceiptModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden no-print">
-    <div class="liquid-glass max-w-md w-full rounded-3xl p-6 shadow-2xl border border-white/90 max-h-[92vh] flex flex-col justify-between">
+  <div id="epsonReceiptModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden no-print">
+    <div class="liquid-glass w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl border border-white/90 max-h-[90vh] flex flex-col justify-between">
       
       <!-- Modal Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div class="flex items-center gap-2">
           <div class="p-2 rounded-xl bg-sky-100 text-sky-700">
-            <i data-lucide="receipt" class="w-5 h-5"></i>
+            <i data-lucide="receipt" class="w-4 h-4 sm:w-5 sm:h-5"></i>
           </div>
           <div>
-            <h4 class="font-bold text-slate-900 text-sm">Xem Trước Hóa Đơn Nhiệt 80mm</h4>
-            <p class="text-[11px] text-slate-500">Mẫu in chuyên dụng máy Epson TM-T8</p>
+            <h4 class="font-bold text-slate-900 text-sm">Hóa Đơn Nhiệt 80mm</h4>
+            <p class="text-[11px] text-slate-500">Chuẩn máy in Epson TM-T8</p>
           </div>
         </div>
         <button onclick="closeEpsonReceiptModal()" class="p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition">
@@ -620,10 +674,10 @@
       </div>
 
       <!-- Simulated 80mm Receipt Paper Preview -->
-      <div class="my-4 overflow-y-auto py-3 px-2 flex justify-center bg-slate-100/70 rounded-2xl border border-slate-200/60">
-        <div class="receipt-paper w-[300px] p-5 text-black border border-slate-300 shadow-md">
+      <div class="my-3 overflow-y-auto py-3 px-2 flex justify-center bg-slate-100/70 rounded-2xl border border-slate-200/60 max-h-[50vh] sm:max-h-[55vh]">
+        <div class="receipt-paper w-[280px] sm:w-[300px] p-4 sm:p-5 text-black border border-slate-300 shadow-md">
           
-          <div class="text-center font-bold text-sm tracking-wider uppercase">
+          <div class="text-center font-bold text-xs sm:text-sm tracking-wider uppercase">
             BIÊN BẢN KIỂM QUỸ
           </div>
           <div class="text-center text-[10px] text-gray-600 mt-0.5 uppercase tracking-wide">
@@ -713,9 +767,9 @@
 
       <!-- Action buttons in Modal -->
       <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-        <button onclick="printNowEpson()" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-sky-500/20 active:scale-95 transition">
+        <button onclick="printNowEpson()" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-sky-500/20 transition">
           <i data-lucide="printer" class="w-4 h-4"></i>
-          <span>In Ngay Ra Máy Epson</span>
+          <span>In Ra Máy Epson TM-T8</span>
         </button>
         <button onclick="closeEpsonReceiptModal()" class="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition">
           Đóng
@@ -797,11 +851,11 @@
     <div style="text-align: center; font-size: 9px; margin-top: 5px;">
       Cảm ơn & Chúc một ca làm việc thành công!
     </div>
-    <div style="height: 15mm;"></div> <!-- Dải đệm cho dao cắt giấy tự động của máy Epson -->
+    <div style="height: 15mm;"></div>
   </div>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+  <div id="toastContainer" class="fixed top-5 inset-x-4 sm:inset-x-auto sm:right-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
@@ -824,7 +878,7 @@
     let expectedAmount = 0;
     let soundEnabled = true;
 
-    // Web Audio Synthesizer (Apple-like subtle clicks & feedback)
+    // Web Audio Synthesizer
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     const audioCtx = AudioContextClass ? new AudioContextClass() : null;
 
@@ -869,7 +923,6 @@
       lucide.createIcons();
     }
 
-    // Number helpers
     function formatCurrency(number) {
       return new Intl.NumberFormat('vi-VN').format(Math.round(number));
     }
@@ -902,28 +955,41 @@
       showToast(`Đã đặt dòng tiền cần kiểm tra: ${formatCurrency(val)} ₫`, 'info');
     }
 
+    // Đồng bộ input giữa Desktop Table và Mobile Cards
+    function syncInputs(val) {
+      const c = counts[val] || 0;
+      const dInp = document.getElementById(`input-${val}`);
+      const mInp = document.getElementById(`mob-input-${val}`);
+      if (dInp) dInp.value = c > 0 ? c : '';
+      if (mInp) mInp.value = c > 0 ? c : '';
+    }
+
     function handleCountChange(value, inputElement) {
       const parsed = Math.max(0, parseInt(inputElement.value, 10) || 0);
       counts[value] = parsed;
-      inputElement.value = parsed > 0 ? parsed : '';
+      syncInputs(value);
       playTone(550, 'sine', 0.03);
+      calculateAll();
+    }
+
+    // Stepper tăng giảm 1 tờ cho mobile (+/-)
+    function stepDelta(value, delta) {
+      counts[value] = Math.max(0, (counts[value] || 0) + delta);
+      syncInputs(value);
+      playTone(delta > 0 ? 640 : 420, 'sine', 0.04);
       calculateAll();
     }
 
     function quickAdd(value, delta) {
       counts[value] = Math.max(0, (counts[value] || 0) + delta);
-      const inputEl = document.getElementById(`input-${value}`);
-      if (inputEl) {
-        inputEl.value = counts[value] > 0 ? counts[value] : '';
-      }
+      syncInputs(value);
       playTone(620 + Math.min(value / 1000, 350), 'sine', 0.04);
       calculateAll();
     }
 
     function clearDenom(value) {
       counts[value] = 0;
-      const inputEl = document.getElementById(`input-${value}`);
-      if (inputEl) inputEl.value = '';
+      syncInputs(value);
       playTone(320, 'sine', 0.05);
       calculateAll();
     }
@@ -931,8 +997,7 @@
     function clearAllDenominations() {
       DENOMINATIONS.forEach(d => {
         counts[d.value] = 0;
-        const inputEl = document.getElementById(`input-${d.value}`);
-        if (inputEl) inputEl.value = '';
+        syncInputs(d.value);
       });
       playTone(300, 'sine', 0.08);
       calculateAll();
@@ -954,12 +1019,15 @@
       renderTable();
     }
 
-    // Render Table Rows
+    // Render Table Rows (Desktop) & Cards (Mobile)
     function renderTable() {
       const tbody = document.getElementById('denominationTableBody');
+      const mobCards = document.getElementById('denominationMobileCards');
+      
       const list = [...DENOMINATIONS];
       if (!isHighToLow) list.reverse();
 
+      // 1. RENDER BẢNG CHO DESKTOP
       tbody.innerHTML = list.map((item, idx) => {
         const val = item.value;
         const count = counts[val] || 0;
@@ -967,24 +1035,21 @@
 
         return `
           <tr class="hover:bg-sky-50/40 transition group">
-            <!-- STT -->
             <td class="py-3 px-5 text-center text-xs text-slate-400 font-sans">
               ${idx + 1}
             </td>
-
-            <!-- Mệnh giá -->
             <td class="py-3 px-5">
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xl border font-mono font-bold text-xs ${item.badge} shadow-xs">
                 <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
                 <span>${item.label}</span>
               </div>
             </td>
-
-            <!-- Input số tờ -->
             <td class="py-3 px-5">
               <div class="relative flex items-center max-w-[170px]">
                 <input 
                   type="number" 
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                   min="0"
                   step="1"
                   placeholder="0"
@@ -997,8 +1062,6 @@
                 <span class="absolute right-3 text-xs font-sans text-slate-400 pointer-events-none">tờ</span>
               </div>
             </td>
-
-            <!-- Quick Add Buttons -->
             <td class="py-3 px-5">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <button type="button" onclick="quickAdd(${val}, 1)" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-mono font-medium transition border border-slate-200/80 shadow-2xs">+1</button>
@@ -1011,21 +1074,84 @@
                 </button>
               </div>
             </td>
-
-            <!-- Thành tiền -->
             <td class="py-3 px-5 text-right">
               <span id="subtotal-${val}" class="font-mono font-bold text-base ${subtotal > 0 ? 'text-slate-900' : 'text-slate-300'}">
                 ${formatCurrency(subtotal)} ₫
               </span>
             </td>
-
-            <!-- Tỷ trọng -->
             <td class="py-3 px-5 text-right hidden sm:table-cell">
               <span id="percent-${val}" class="text-xs font-mono text-slate-400">
                 0%
               </span>
             </td>
           </tr>
+        `;
+      }).join('');
+
+      // 2. RENDER CÁC THẺ CẢM ỨNG DI ĐỘNG (MOBILE CARDS)
+      mobCards.innerHTML = list.map((item) => {
+        const val = item.value;
+        const count = counts[val] || 0;
+        const subtotal = count * val;
+
+        return `
+          <div class="p-3.5 rounded-2xl bg-white/90 border border-slate-200/80 shadow-xs hover:border-sky-300 transition">
+            <!-- Top: Badge Mệnh giá + Thành tiền -->
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl border font-mono font-bold text-xs ${item.badge}">
+                  ${item.label}
+                </span>
+                <span id="mob-percent-${val}" class="text-[11px] font-mono text-slate-400">0%</span>
+              </div>
+              <div class="text-right">
+                <div class="text-[10px] text-slate-400 font-sans">Thành tiền</div>
+                <div id="mob-subtotal-${val}" class="font-mono font-bold text-sm ${subtotal > 0 ? 'text-slate-900' : 'text-slate-300'}">
+                  ${formatCurrency(subtotal)} ₫
+                </div>
+              </div>
+            </div>
+
+            <!-- Middle: Stepper +/- & Input to rõ -->
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="stepDelta(${val}, -1)" class="w-11 h-11 rounded-xl bg-slate-100 active:bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xl transition shrink-0 active:scale-95" title="Giảm 1 tờ">
+                -
+              </button>
+              
+              <div class="relative flex-1">
+                <input 
+                  type="number" 
+                  inputmode="numeric" 
+                  pattern="[0-9]*" 
+                  min="0" 
+                  step="1" 
+                  placeholder="0"
+                  id="mob-input-${val}"
+                  value="${count > 0 ? count : ''}"
+                  oninput="handleCountChange(${val}, this)"
+                  class="denom-input-mob w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-center font-mono font-extrabold text-base text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/10 transition shadow-2xs"
+                >
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400 font-sans pointer-events-none">tờ</span>
+              </div>
+
+              <button type="button" onclick="stepDelta(${val}, 1)" class="w-11 h-11 rounded-xl bg-sky-500 active:bg-sky-600 text-white flex items-center justify-center font-bold text-xl shadow-xs transition shrink-0 active:scale-95" title="Tăng 1 tờ">
+                +
+              </button>
+            </div>
+
+            <!-- Bottom: Các nút cộng nhanh -->
+            <div class="mt-2.5 flex items-center justify-between gap-1 text-xs">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <button type="button" onclick="quickAdd(${val}, 5)" class="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 font-mono font-semibold border border-slate-200/80 active:scale-95 transition">+5</button>
+                <button type="button" onclick="quickAdd(${val}, 10)" class="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 font-mono font-semibold border border-slate-200/80 active:scale-95 transition">+10</button>
+                <button type="button" onclick="quickAdd(${val}, 50)" class="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 font-mono font-semibold border border-slate-200/80 active:scale-95 transition">+50</button>
+                <button type="button" onclick="quickAdd(${val}, 100)" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold border border-emerald-200 active:scale-95 transition" title="1 xấp 100 tờ">+100</button>
+              </div>
+              <button type="button" onclick="clearDenom(${val})" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 active:bg-rose-50 transition" title="Xóa dòng này">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
         `;
       }).join('');
 
@@ -1058,10 +1184,18 @@
         totalActual += subtotal;
         totalBills += count;
 
+        // Cập nhật desktop
         const subtotalEl = document.getElementById(`subtotal-${val}`);
         if (subtotalEl) {
           subtotalEl.innerText = `${formatCurrency(subtotal)} ₫`;
           subtotalEl.className = `font-mono font-bold text-base ${subtotal > 0 ? 'text-slate-900' : 'text-slate-300'}`;
+        }
+
+        // Cập nhật mobile card
+        const mobSubtotalEl = document.getElementById(`mob-subtotal-${val}`);
+        if (mobSubtotalEl) {
+          mobSubtotalEl.innerText = `${formatCurrency(subtotal)} ₫`;
+          mobSubtotalEl.className = `font-mono font-bold text-sm ${subtotal > 0 ? 'text-slate-900' : 'text-slate-300'}`;
         }
       });
 
@@ -1070,13 +1204,31 @@
         const count = counts[val] || 0;
         const subtotal = count * val;
         const pct = totalActual > 0 ? ((subtotal / totalActual) * 100).toFixed(1) : '0';
+        
         const pctEl = document.getElementById(`percent-${val}`);
         if (pctEl) pctEl.innerText = `${pct}%`;
+
+        const mobPctEl = document.getElementById(`mob-percent-${val}`);
+        if (mobPctEl) mobPctEl.innerText = `${pct}%`;
       });
 
+      // Desktop footer
       document.getElementById('totalBillCount').innerText = formatCurrency(totalBills);
       document.getElementById('footerTotalAmount').innerText = formatCurrency(totalActual);
 
+      // Mobile footer
+      const mobBillsFooter = document.getElementById('mobTotalBillsFooter');
+      if (mobBillsFooter) mobBillsFooter.innerText = formatCurrency(totalBills);
+      const mobAmtFooter = document.getElementById('mobTotalAmountFooter');
+      if (mobAmtFooter) mobAmtFooter.innerText = formatCurrency(totalActual);
+
+      // Mobile Floating Dock
+      const mobDockBills = document.getElementById('mobDockBills');
+      if (mobDockBills) mobDockBills.innerText = `(${formatCurrency(totalBills)} tờ)`;
+      const mobDockActual = document.getElementById('mobDockActual');
+      if (mobDockActual) mobDockActual.innerText = `${formatCurrency(totalActual)} ₫`;
+
+      // Stat cards
       document.getElementById('displayExpectedAmount').innerText = `${formatCurrency(expectedAmount)} ₫`;
       document.getElementById('displayActualAmount').innerText = `${formatCurrency(totalActual)} ₫`;
 
@@ -1104,39 +1256,47 @@
       const iconBox = document.getElementById('statusIconBox');
       const icon = document.getElementById('statusIcon');
       const pBar = document.getElementById('progressBar');
+      const mobDockBadge = document.getElementById('mobDockBadge');
 
       let currentStatus = '';
 
       if (expected === 0 && actual === 0) {
         currentStatus = 'empty';
-        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid border relative overflow-hidden bg-white/90 border-slate-200/80';
-        badge.className = 'px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-200';
+        banner.className = 'rounded-2xl sm:rounded-3xl transition-all duration-500 p-4 sm:p-6 shadow-liquid border relative overflow-hidden bg-white/90 border-slate-200/80';
+        badge.className = 'px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-200';
         badge.innerText = 'Đang chờ kiểm đếm';
         diffPctEl.innerText = '';
         headline.innerText = 'Vui lòng nhập dòng tiền sổ sách và số tờ';
-        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-slate-900';
+        headline.className = 'text-lg sm:text-2xl font-extrabold tracking-tight mt-1 sm:mt-1.5 text-slate-900 leading-snug';
         desc.innerText = 'Nhập số tiền mục tiêu cần đối soát ở trên và điền số tờ của các mệnh giá tương ứng.';
         diffEl.innerText = '0 ₫';
-        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-slate-400 mt-0.5';
-        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-slate-100 text-slate-500';
+        diffEl.className = 'text-sm sm:text-xl font-mono font-bold text-slate-400 mt-0.5';
+        iconBox.className = 'w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-slate-100 text-slate-500';
         icon.setAttribute('data-lucide', 'scale');
         pBar.className = 'h-full bg-slate-300 rounded-full transition-all duration-300';
+        if (mobDockBadge) {
+          mobDockBadge.innerText = 'Chờ đếm';
+          mobDockBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200';
+        }
       } 
       else if (diff === 0 && expected > 0) {
-        // KHỚP QUỸ TUYỆT ĐỐI (APPLE SYSTEM GREEN)
         currentStatus = 'matched';
-        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid-hover border-2 relative overflow-hidden bg-gradient-to-r from-emerald-50/90 via-white to-emerald-50/60 border-emerald-500 shadow-emerald-500/10';
-        badge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-emerald-500 text-white shadow-sm flex items-center gap-1.5';
-        badge.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i> KHỚP QUỸ TUYỆT ĐỐI (100%)';
+        banner.className = 'rounded-2xl sm:rounded-3xl transition-all duration-500 p-4 sm:p-6 shadow-liquid-hover border-2 relative overflow-hidden bg-gradient-to-r from-emerald-50/90 via-white to-emerald-50/60 border-emerald-500 shadow-emerald-500/10';
+        badge.className = 'px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wide bg-emerald-500 text-white shadow-sm flex items-center gap-1.5';
+        badge.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i> KHỚP QUỸ (100%)';
         diffPctEl.innerText = 'Chênh lệch 0 ₫';
-        headline.innerText = 'Cân đối hoàn hảo! Tiền thực tế khớp hoàn toàn với sổ sách';
-        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-emerald-800';
-        desc.innerText = `Đã kiểm đếm đủ ${formatCurrency(totalBills)} tờ, tổng tiền chính xác ${formatCurrency(actual)} ₫. Đủ điều kiện bàn giao hoặc chốt ca an toàn.`;
+        headline.innerText = 'Cân đối hoàn hảo! Tiền thực tế khớp sổ sách';
+        headline.className = 'text-lg sm:text-2xl font-extrabold tracking-tight mt-1 sm:mt-1.5 text-emerald-800 leading-snug';
+        desc.innerText = `Đã kiểm đếm đủ ${formatCurrency(totalBills)} tờ, tổng tiền chính xác ${formatCurrency(actual)} ₫. Đủ điều kiện bàn giao ca an toàn.`;
         diffEl.innerText = '0 ₫';
-        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-emerald-600 mt-0.5';
-        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-emerald-500 text-white animate-bounce';
+        diffEl.className = 'text-sm sm:text-xl font-mono font-bold text-emerald-600 mt-0.5';
+        iconBox.className = 'w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-emerald-500 text-white animate-bounce';
         icon.setAttribute('data-lucide', 'check-check');
         pBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-300';
+        if (mobDockBadge) {
+          mobDockBadge.innerText = '✓ Khớp 100%';
+          mobDockBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white shadow-xs';
+        }
 
         if (lastStatusKey !== 'matched') {
           playSuccessChime();
@@ -1146,42 +1306,48 @@
         }
       } 
       else if (diff < 0) {
-        // THIẾU QUỸ (APPLE SYSTEM RED)
         currentStatus = 'shortage';
         const missingAmount = Math.abs(diff);
         const percentLost = expected > 0 ? ((missingAmount / expected) * 100).toFixed(1) : 0;
 
-        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid border-2 relative overflow-hidden bg-gradient-to-r from-rose-50/90 via-white to-rose-50/50 border-rose-500 shadow-rose-500/10';
-        badge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-rose-500 text-white shadow-sm flex items-center gap-1.5';
-        badge.innerHTML = '<i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> CẢNH BÁO: THIẾU QUỸ TIỀN MẶT';
+        banner.className = 'rounded-2xl sm:rounded-3xl transition-all duration-500 p-4 sm:p-6 shadow-liquid border-2 relative overflow-hidden bg-gradient-to-r from-rose-50/90 via-white to-rose-50/50 border-rose-500 shadow-rose-500/10';
+        badge.className = 'px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wide bg-rose-500 text-white shadow-sm flex items-center gap-1.5';
+        badge.innerHTML = '<i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> THIẾU QUỸ TIỀN MẶT';
         diffPctEl.innerText = `(Hụt ${percentLost}%)`;
         headline.innerText = `Quỹ bị THIẾU: -${formatCurrency(missingAmount)} ₫`;
-        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-rose-700';
+        headline.className = 'text-lg sm:text-2xl font-extrabold tracking-tight mt-1 sm:mt-1.5 text-rose-700 leading-snug';
         desc.innerText = 'Tiền mặt thực đếm nhỏ hơn tiền sổ sách. Vui lòng rà soát lại hóa đơn hủy, đơn chưa thanh toán hoặc khay tiền lẻ.';
         diffEl.innerText = `-${formatCurrency(missingAmount)} ₫`;
-        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-rose-600 mt-0.5';
-        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-rose-500 text-white animate-pulse';
+        diffEl.className = 'text-sm sm:text-xl font-mono font-bold text-rose-600 mt-0.5';
+        iconBox.className = 'w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-rose-500 text-white animate-pulse';
         icon.setAttribute('data-lucide', 'trending-down');
         pBar.className = 'h-full bg-rose-500 rounded-full transition-all duration-300';
+        if (mobDockBadge) {
+          mobDockBadge.innerText = `Thiếu -${formatCurrency(missingAmount)} ₫`;
+          mobDockBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500 text-white shadow-xs';
+        }
       } 
       else {
-        // THỪA QUỸ (APPLE SYSTEM ORANGE / AMBER)
         currentStatus = 'surplus';
         const surplusAmount = diff;
         const percentSurplus = expected > 0 ? ((surplusAmount / expected) * 100).toFixed(1) : 0;
 
-        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid border-2 relative overflow-hidden bg-gradient-to-r from-amber-50/90 via-white to-amber-50/50 border-amber-500 shadow-amber-500/10';
-        badge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-amber-500 text-white shadow-sm flex items-center gap-1.5';
-        badge.innerHTML = '<i data-lucide="info" class="w-3.5 h-3.5"></i> THÔNG BÁO: THỪA QUỸ TIỀN MẶT';
+        banner.className = 'rounded-2xl sm:rounded-3xl transition-all duration-500 p-4 sm:p-6 shadow-liquid border-2 relative overflow-hidden bg-gradient-to-r from-amber-50/90 via-white to-amber-50/50 border-amber-500 shadow-amber-500/10';
+        badge.className = 'px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wide bg-amber-500 text-white shadow-sm flex items-center gap-1.5';
+        badge.innerHTML = '<i data-lucide="info" class="w-3.5 h-3.5"></i> THỪA QUỸ TIỀN MẶT';
         diffPctEl.innerText = `(Dư +${percentSurplus}%)`;
         headline.innerText = `Quỹ bị THỪA: +${formatCurrency(surplusAmount)} ₫`;
-        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-amber-800';
+        headline.className = 'text-lg sm:text-2xl font-extrabold tracking-tight mt-1 sm:mt-1.5 text-amber-800 leading-snug';
         desc.innerText = 'Tiền mặt thực đếm nhiều hơn sổ sách ghi nhận. Vui lòng kiểm tra tiền boa (tip), khách quên tiền thối hoặc đơn chưa gạch nợ.';
         diffEl.innerText = `+${formatCurrency(surplusAmount)} ₫`;
-        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-amber-600 mt-0.5';
-        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-amber-500 text-white';
+        diffEl.className = 'text-sm sm:text-xl font-mono font-bold text-amber-600 mt-0.5';
+        iconBox.className = 'w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-amber-500 text-white';
         icon.setAttribute('data-lucide', 'trending-up');
         pBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-300';
+        if (mobDockBadge) {
+          mobDockBadge.innerText = `Thừa +${formatCurrency(surplusAmount)} ₫`;
+          mobDockBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white shadow-xs';
+        }
       }
 
       lastStatusKey = currentStatus;
@@ -1216,7 +1382,7 @@
       });
 
       container.innerHTML = segments.join('');
-      legendText.innerText = topDenoms.slice(0, 4).join(' • ') || 'Đã phân bổ các mệnh giá';
+      legendText.innerText = topDenoms.slice(0, 3).join(' • ') || 'Đã phân bổ';
     }
 
     // SAO CHÉP BÁO CÁO GỬI ZALO / TELEGRAM
@@ -1258,11 +1424,11 @@
 Chi tiết các mệnh giá:
 ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
 ━━━━━━━━━━━━━━━━━━━━
-(CashAudit Apple Liquid System)`;
+(CashAudit Apple Liquid)`;
 
       navigator.clipboard.writeText(report).then(() => {
         playTone(900, 'sine', 0.1);
-        showToast('Đã sao chép báo cáo kiểm quỹ vào Clipboard! Sẵn sàng dán gửi Zalo/Telegram.', 'success');
+        showToast('Đã sao chép báo cáo! Dán ngay vào Zalo/Telegram.', 'success');
       }).catch(() => {
         showToast('Không thể sao chép, vui lòng thử lại', 'error');
       });
@@ -1300,7 +1466,6 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
       if (diff < 0) diffStr = `-${formatCurrency(Math.abs(diff))} đ (THIẾU)`;
       if (diff > 0) diffStr = `+${formatCurrency(diff)} đ (THỪA)`;
 
-      // 1. Cập nhật dữ liệu cho Modal Xem Trước
       document.getElementById('recDate').innerText = nowStr;
       document.getElementById('recAuditor').innerText = auditor;
       document.getElementById('recSignAuditor').innerText = auditor;
@@ -1324,7 +1489,6 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
         `).join('');
       }
 
-      // 2. Cập nhật dữ liệu cho Vùng in thật chuẩn máy in Epson TM-T8
       document.getElementById('prtDate').innerText = nowStr;
       document.getElementById('prtAuditor').innerText = auditor;
       document.getElementById('prtSignAuditor').innerText = auditor;
@@ -1362,11 +1526,9 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
     function printNowEpson() {
       prepareEpsonThermalReceiptData();
       closeEpsonReceiptModal();
-      // Kích hoạt hộp thoại in của trình duyệt (Đã cấu hình @media print khổ 80mm tối ưu cho TM-T8)
       window.print();
     }
 
-    // Tự động chuẩn bị trước khi in nếu người dùng bấm Ctrl + P trực tiếp
     window.onbeforeprint = () => {
       prepareEpsonThermalReceiptData();
     };
@@ -1416,7 +1578,7 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
       localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 
       playTone(850, 'sine', 0.08);
-      showToast('Đã lưu phiên kiểm quỹ vào lịch sử thành công!', 'success');
+      showToast('Đã lưu phiên kiểm quỹ vào lịch sử!', 'success');
       renderHistoryList();
     }
 
@@ -1434,8 +1596,7 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
 
         DENOMINATIONS.forEach(d => {
           counts[d.value] = item.counts ? (item.counts[d.value] || 0) : 0;
-          const inputEl = document.getElementById(`input-${d.value}`);
-          if (inputEl) inputEl.value = counts[d.value] > 0 ? counts[d.value] : '';
+          syncInputs(d.value);
         });
 
         calculateAll();
@@ -1469,8 +1630,8 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
 
       if (history.length === 0) {
         listContainer.innerHTML = `
-          <div class="text-center py-6 text-slate-400 text-xs">
-            <i data-lucide="inbox" class="w-7 h-7 mx-auto mb-2 text-slate-300"></i>
+          <div class="text-center py-5 text-slate-400 text-xs">
+            <i data-lucide="inbox" class="w-6 h-6 mx-auto mb-1 text-slate-300"></i>
             Chưa có phiên kiểm quỹ nào được lưu.
           </div>
         `;
@@ -1484,9 +1645,9 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
         if (item.diff > 0) statusBadge = `<span class="text-amber-600 font-bold">Thừa +${formatCurrency(item.diff)} ₫</span>`;
 
         return `
-          <div onclick="restoreSession(${item.id})" class="p-3.5 rounded-2xl bg-white hover:bg-sky-50/50 border border-slate-200/80 transition cursor-pointer flex items-center justify-between text-xs group shadow-2xs">
+          <div onclick="restoreSession(${item.id})" class="p-3 rounded-xl sm:rounded-2xl bg-white hover:bg-sky-50/50 border border-slate-200/80 transition cursor-pointer flex items-center justify-between text-xs group shadow-2xs">
             <div>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1.5 sm:gap-2">
                 <span class="font-bold text-slate-900">${item.timeFormatted}</span>
                 <span class="text-slate-300">•</span>
                 <span class="text-slate-500">${item.dateFormatted}</span>
@@ -1500,12 +1661,12 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
               </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3">
               <div class="text-right">
                 ${statusBadge}
                 <div class="text-[10px] text-slate-400 font-mono">${item.totalBills} tờ</div>
               </div>
-              <button onclick="deleteHistoryItem(${item.id}, event)" class="opacity-0 group-hover:opacity-100 p-1 hover:text-rose-600 text-slate-400 transition" title="Xóa">
+              <button onclick="deleteHistoryItem(${item.id}, event)" class="p-1 hover:text-rose-600 text-slate-400 transition" title="Xóa">
                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
               </button>
             </div>
@@ -1535,7 +1696,7 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
         iconName = 'alert-circle';
       }
 
-      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl border backdrop-blur-xl flex items-center gap-2.5 text-xs font-semibold transition-all duration-300 transform translate-y-3 opacity-0 ${borderClass}`;
+      toast.className = `pointer-events-auto px-4 py-2.5 sm:py-3 rounded-2xl border backdrop-blur-xl flex items-center gap-2.5 text-xs font-semibold transition-all duration-300 transform -translate-y-3 opacity-0 ${borderClass}`;
       toast.innerHTML = `
         <i data-lucide="${iconName}" class="w-4 h-4 shrink-0"></i>
         <span>${message}</span>
@@ -1545,16 +1706,15 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
       lucide.createIcons();
 
       requestAnimationFrame(() => {
-        toast.classList.remove('translate-y-3', 'opacity-0');
+        toast.classList.remove('-translate-y-3', 'opacity-0');
       });
 
       setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
+        toast.classList.add('opacity-0', '-translate-y-2');
         setTimeout(() => toast.remove(), 300);
       }, 3500);
     }
 
-    // Live clock
     function updateClock() {
       const now = new Date();
       const timeStr = now.toLocaleTimeString('vi-VN');
@@ -1564,7 +1724,6 @@ ${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Khởi tạo
     window.addEventListener('DOMContentLoaded', () => {
       renderTable();
       calculateAll();
