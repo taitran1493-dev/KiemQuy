@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CashAudit Apple Liquid - Kiểm Quỹ Chuyên Nghiệp (Tối ưu Epson TM-T8)</title>
+  
+  <!-- Apple-inspired typography: SF Pro / Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Confetti for success celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+          colors: {
+            apple: {
+              blue: '#0071e3',
+              blueHover: '#0077ed',
+              gray: '#f5f5f7',
+              dark: '#1d1d1f',
+              green: '#34c759',
+              orange: '#ff9500',
+              red: '#ff3b30',
+              purple: '#af52de'
+            }
+          },
+          boxShadow: {
+            'liquid': '0 20px 40px -15px rgba(0, 0, 0, 0.05), 0 0 1px 1px rgba(255, 255, 255, 0.9) inset',
+            'liquid-hover': '0 25px 50px -12px rgba(0, 113, 227, 0.12), 0 0 1px 1px rgba(255, 255, 255, 1) inset',
+            'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.06)',
+            'apple-card': '0 4px 24px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Ẩn spinner mặc định của input number */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    /* Apple Liquid Glass Effect */
+    .liquid-glass {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+    }
+
+    .liquid-glass-subtle {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    /* Ambient Liquid Orbs Background */
+    .orb-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: #f8fafc;
+      pointer-events: none;
+    }
+    .orb-1 {
+      position: absolute;
+      top: -10%;
+      left: 15%;
+      width: 55vw;
+      height: 55vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, rgba(224, 242, 254, 0) 70%);
+      filter: blur(60px);
+      animation: float 22s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      position: absolute;
+      top: 35%;
+      right: -5%;
+      width: 48vw;
+      height: 48vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(52, 199, 89, 0.13) 0%, rgba(220, 252, 231, 0) 70%);
+      filter: blur(70px);
+      animation: float 28s ease-in-out infinite alternate-reverse;
+    }
+    .orb-3 {
+      position: absolute;
+      bottom: -15%;
+      left: 5%;
+      width: 50vw;
+      height: 50vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(175, 82, 222, 0.1) 0%, rgba(243, 232, 255, 0) 70%);
+      filter: blur(65px);
+      animation: float 25s ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    /* Simulated receipt paper style */
+    .receipt-paper {
+      background: #fff;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    .receipt-paper::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: radial-gradient(circle, transparent, transparent 50%, #fff 50%, #fff 100%);
+      background-size: 14px 14px;
+    }
+    .receipt-paper::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: radial-gradient(circle, #fff, #fff 50%, transparent 50%, transparent 100%);
+      background-size: 14px 14px;
+    }
+
+    /* ============================================================
+       QUY CHUẨN IN MÁY IN BILL NHIỆT EPSON TM-T82 / TM-T88 (80MM)
+       ============================================================ */
+    @media print {
+      /* Định dạng chuẩn cuộn nhiệt 80mm EPSON TM-T8 */
+      @page {
+        size: 80mm auto;
+        margin: 0;
+      }
+      
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'JetBrains Mono', 'Courier New', monospace, sans-serif !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      /* Ẩn toàn bộ giao diện app khi in, CHỈ IN DUY NHẤT BILL NHIỆT */
+      #appMainInterface {
+        display: none !important;
+      }
+
+      #epsonThermalReceiptPrint {
+        display: block !important;
+        width: 72mm !important; /* Vùng in thực tế hiệu dụng của máy 80mm Epson */
+        margin: 0 auto !important;
+        padding: 4mm 2mm 8mm 2mm !important;
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        color: #000000 !important;
+      }
+
+      .epson-title {
+        font-size: 15px !important;
+        font-weight: 800 !important;
+        text-align: center !important;
+      }
+
+      .epson-sub {
+        font-size: 10px !important;
+        text-align: center !important;
+      }
+
+      .epson-divider {
+        border-top: 1px dashed #000000 !important;
+        margin: 4px 0 !important;
+      }
+
+      .epson-double-divider {
+        border-top: 1px double #000000 !important;
+        margin: 5px 0 !important;
+      }
+
+      .epson-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+
+      .epson-table th, .epson-table td {
+        padding: 2px 0 !important;
+      }
+    }
+
+    /* Ở chế độ web bình thường thì ẩn vùng in bill nhiệt ngầm */
+    #epsonThermalReceiptPrint {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-sky-500 selection:text-white antialiased pb-24">
+
+  <!-- Ambient Light Orbs -->
+  <div class="orb-bg">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+    <div class="orb-3"></div>
+  </div>
+
+  <!-- APPLICATION INTERFACE -->
+  <div id="appMainInterface">
+    
+    <!-- TOP NAVIGATION BAR (APPLE LIQUID STYLE) -->
+    <header class="sticky top-0 z-40 liquid-glass border-b border-white/80 shadow-sm transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+        
+        <!-- Brand / Logo -->
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/25 text-white">
+            <i data-lucide="wallet" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                CashAudit
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 border border-sky-200/80">Liquid Pro</span>
+              </h1>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Hệ thống kiểm kê quỹ tiền mặt • Thiết kế phong cách Apple</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2">
+          
+          <!-- Sound toggle -->
+          <button id="btnSoundToggle" onclick="toggleSound()" class="p-2.5 rounded-full liquid-glass-subtle hover:bg-white text-slate-600 hover:text-slate-900 transition shadow-sm border border-slate-200/60" title="Bật/Tắt âm thanh thao tác">
+            <i data-lucide="volume-2" id="soundIcon" class="w-4 h-4 text-emerald-600"></i>
+          </button>
+
+          <!-- Sao chép báo cáo -->
+          <button onclick="copyAuditReport()" class="px-3.5 py-2 rounded-full liquid-glass hover:bg-white text-slate-700 hover:text-sky-600 transition text-xs font-semibold flex items-center gap-1.5 shadow-sm border border-slate-200/70" title="Sao chép báo cáo gửi Zalo / Telegram">
+            <i data-lucide="copy" class="w-4 h-4 text-sky-500"></i>
+            <span class="hidden md:inline">Sao chép</span>
+          </button>
+
+          <!-- NÚT IN TỐI ƯU CHO EPSON TM-T8 (TRỌNG TÂM ĐỀ BÀI) -->
+          <button onclick="openEpsonReceiptModal()" class="px-4 py-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-sky-500/25 hover:shadow-lg transition transform active:scale-95" title="In bill nhiệt cho máy Epson TM-T82 / TM-T88 (80mm)">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>In Bill Epson TM-T8</span>
+            <span class="px-1.5 py-0.2 text-[10px] bg-white/20 rounded-md font-mono">80mm</span>
+          </button>
+
+          <!-- Làm mới -->
+          <button onclick="confirmResetAll()" class="p-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/70 transition shadow-sm" title="Làm mới bảng kiểm quỹ">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 space-y-7">
+
+      <!-- TOP GRID: THÔNG TIN PHIÊN & DÒNG TIỀN MỤC TIÊU -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- THÔNG TIN PHIÊN (5 Cột) -->
+        <div class="lg:col-span-5 liquid-glass rounded-3xl p-6 shadow-liquid relative overflow-hidden transition-all duration-300">
+          <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
+            <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
+              <span class="p-1.5 rounded-xl bg-sky-50 text-sky-600">
+                <i data-lucide="user-check" class="w-4 h-4"></i>
+              </span>
+              <span>Phiên kiểm quỹ</span>
+            </div>
+            <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-600 font-mono text-xs font-semibold shadow-xs border border-slate-200/50">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span id="liveClock">--:--:--</span>
+            </div>
+          </div>
+
+          <div class="space-y-3.5 text-xs">
+            <div>
+              <label class="font-semibold text-slate-600 block mb-1">Thu ngân / Người kiểm</label>
+              <div class="relative">
+                <input type="text" id="auditorName" value="Nguyễn Văn A" class="w-full bg-white/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs">
+                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="font-semibold text-slate-600 block mb-1">Ca làm / Quầy thu ngân</label>
+              <div class="relative">
+                <input type="text" id="shiftName" value="Ca Sáng - Quầy 01 (Epson TM-T8)" class="w-full bg-white/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs">
+                <i data-lucide="store" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="font-semibold text-slate-600 block mb-1">Ghi chú giải trình chênh lệch</label>
+              <input type="text" id="auditNotes" placeholder="VD: Khách boa, thừa tiền lẻ, trả tiền cọc..." class="w-full bg-white/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- DÒNG TIỀN CẦN KIỂM TRA (SỔ SÁCH POS) (7 Cột) -->
+        <div class="lg:col-span-7 liquid-glass rounded-3xl p-6 shadow-liquid flex flex-col justify-between relative overflow-hidden transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="p-1.5 rounded-xl bg-blue-50 text-blue-600">
+                  <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                </span>
+                <span class="text-sm font-bold text-slate-900">Dòng tiền cần kiểm tra (Sổ sách / POS)</span>
+              </div>
+              <span class="text-[11px] font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100">Mục tiêu đối soát</span>
+            </div>
+
+            <label for="expectedAmountInput" class="text-xs font-semibold text-slate-500 block mb-1.5">
+              Nhập số tiền phần mềm POS / Doanh thu hệ thống ghi nhận:
+            </label>
+
+            <div class="relative">
+              <input 
+                type="text" 
+                id="expectedAmountInput" 
+                placeholder="0"
+                autocomplete="off"
+                oninput="handleExpectedAmountInput(this)"
+                class="w-full bg-white border-2 border-slate-200/80 rounded-2xl px-5 py-4 text-2xl sm:text-3xl font-extrabold font-mono text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-sm pr-16"
+              >
+              <div class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold font-mono text-sm tracking-wide">
+                VNĐ
+              </div>
+            </div>
+          </div>
+
+          <!-- Phím chọn nhanh tiện lợi -->
+          <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2 text-xs">
+            <span class="text-slate-500 font-medium flex items-center gap-1">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-500"></i>
+              Chọn nhanh số tiền:
+            </span>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <button onclick="setExpectedQuick(2000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">2.000.000</button>
+              <button onclick="setExpectedQuick(5000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">5.000.000</button>
+              <button onclick="setExpectedQuick(10000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">10.000.000</button>
+              <button onclick="setExpectedQuick(20000000)" class="px-2.5 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-mono font-medium border border-slate-200/80 shadow-xs transition">20.000.000</button>
+              <button onclick="setExpectedQuick(0)" class="px-2.5 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 font-medium border border-rose-200/80 transition">Xóa</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ALERT BANNER: TRẠNG THÁI CHÊNH LỆCH QUỸ (APPLE CARD LIQUID) -->
+      <section id="alertBanner" class="rounded-3xl transition-all duration-500 p-6 shadow-liquid border relative overflow-hidden bg-white/90 border-slate-200/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          
+          <!-- Thông tin trạng thái chính -->
+          <div class="flex items-start sm:items-center gap-4.5">
+            <div id="statusIconBox" class="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-slate-100 text-slate-500 transition-all duration-300">
+              <i data-lucide="scale" id="statusIcon" class="w-8 h-8"></i>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span id="statusBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-200">
+                  Đang chờ kiểm đếm
+                </span>
+                <span id="diffPercentage" class="text-xs font-mono font-semibold text-slate-500"></span>
+              </div>
+              <h2 id="statusHeadline" class="text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-slate-900">
+                Nhập số lượng tờ của từng loại tiền
+              </h2>
+              <p id="statusDesc" class="text-xs sm:text-sm text-slate-500 mt-0.5 leading-relaxed">
+                Hệ thống tự động tính thành tiền, tổng thực tế và báo động chênh lệch so với dòng tiền cần kiểm tra.
+              </p>
+            </div>
+          </div>
+
+          <!-- 3 Thẻ số liệu tương phản cao -->
+          <div class="grid grid-cols-3 gap-3 sm:gap-6 border-t md:border-t-0 md:border-l border-slate-200/80 pt-4 md:pt-0 md:pl-8 shrink-0">
+            <!-- Sổ sách -->
+            <div class="text-left md:text-right">
+              <div class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Tiền Sổ Sách</div>
+              <div id="displayExpectedAmount" class="text-lg sm:text-xl font-mono font-bold text-sky-600 mt-0.5">0 ₫</div>
+            </div>
+
+            <!-- Thực tế -->
+            <div class="text-left md:text-right">
+              <div class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Tiền Thực Đếm</div>
+              <div id="displayActualAmount" class="text-lg sm:text-xl font-mono font-bold text-slate-900 mt-0.5">0 ₫</div>
+            </div>
+
+            <!-- Chênh lệch -->
+            <div class="text-left md:text-right">
+              <div class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Chênh Lệch</div>
+              <div id="displayDiffAmount" class="text-lg sm:text-xl font-mono font-bold text-slate-600 mt-0.5">0 ₫</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Thanh đo lường tiến độ -->
+        <div class="mt-5 pt-3.5 border-t border-slate-100">
+          <div class="flex justify-between text-xs text-slate-500 mb-1.5 font-medium">
+            <span>Tiến độ đối soát dòng tiền:</span>
+            <span id="progressText" class="font-mono font-bold text-slate-700">0%</span>
+          </div>
+          <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
+            <div id="progressBar" class="h-full bg-sky-500 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABLE: BẢNG KIỂM ĐẾM 10 MỆNH GIÁ TIỀN VIỆT NAM -->
+      <section class="liquid-glass rounded-3xl shadow-liquid border border-white/90 overflow-hidden">
+        
+        <div class="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span class="p-1.5 rounded-xl bg-emerald-50 text-emerald-600">
+                <i data-lucide="banknote" class="w-5 h-5"></i>
+              </span>
+              <span>Bảng kiểm kê 10 mệnh giá tiền Việt Nam</span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5 font-medium">Phím Enter để nhảy nhanh sang mệnh giá kế tiếp • Bấm +100 để cộng nhanh 1 thếp</p>
+          </div>
+
+          <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+            <!-- Sắp xếp -->
+            <button onclick="toggleSortOrder()" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 border border-slate-200 shadow-xs flex items-center gap-1.5 transition">
+              <i data-lucide="arrow-down-up" class="w-3.5 h-3.5 text-slate-500"></i>
+              <span id="sortOrderLabel">Cao &rarr; Thấp</span>
+            </button>
+            
+            <!-- Xóa số tờ -->
+            <button onclick="clearAllDenominations()" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-rose-50 text-xs font-semibold text-rose-600 border border-slate-200 hover:border-rose-200 shadow-xs flex items-center gap-1.5 transition">
+              <i data-lucide="eraser" class="w-3.5 h-3.5"></i>
+              <span>Xóa số tờ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bảng danh sách mệnh giá -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] uppercase tracking-wider text-slate-500 font-bold">
+                <th class="py-3.5 px-5 w-12 text-center">STT</th>
+                <th class="py-3.5 px-5 min-w-[150px]">Mệnh giá</th>
+                <th class="py-3.5 px-5 min-w-[200px]">Số lượng tờ</th>
+                <th class="py-3.5 px-5 min-w-[220px]">Cộng nhanh</th>
+                <th class="py-3.5 px-5 min-w-[170px] text-right">Thành tiền (VNĐ)</th>
+                <th class="py-3.5 px-5 w-28 text-right hidden sm:table-cell">Tỷ trọng</th>
+              </tr>
+            </thead>
+            <tbody id="denominationTableBody" class="divide-y divide-slate-100 font-mono text-sm">
+              <!-- Render động bằng JavaScript -->
+            </tbody>
+            <tfoot class="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-t-2 border-slate-200 font-bold">
+              <tr>
+                <td colspan="2" class="py-5 px-5 text-slate-800 text-base font-sans">
+                  TỔNG CỘNG TIỀN MẶT THỰC ĐẾM
+                </td>
+                <td class="py-5 px-5 text-slate-900 font-mono text-lg">
+                  <span id="totalBillCount">0</span> <span class="text-xs font-sans text-slate-500 font-normal">tờ</span>
+                </td>
+                <td class="py-5 px-5 text-xs text-slate-400 font-sans font-normal">
+                  10 mệnh giá chuẩn VNĐ
+                </td>
+                <td class="py-5 px-5 text-right font-mono text-2xl text-slate-900">
+                  <span id="footerTotalAmount">0</span> ₫
+                </td>
+                <td class="py-5 px-5 text-right text-xs text-slate-500 hidden sm:table-cell">
+                  100%
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Thanh phân bổ tỷ trọng (Breakdown bar) -->
+        <div class="p-5 border-t border-slate-100 bg-white/50">
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+            <span class="flex items-center gap-1.5 font-semibold text-slate-700">
+              <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-sky-500"></i>
+              Tỷ trọng các mệnh giá trong quỹ thực tế:
+            </span>
+            <span id="breakdownLegendText" class="text-slate-400">Chưa có dữ liệu</span>
+          </div>
+          <div id="breakdownBar" class="h-3 w-full rounded-full bg-slate-100 border border-slate-200/80 flex overflow-hidden">
+            <!-- Render các đoạn màu tỷ lệ -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- BOTTOM SECTION: LỊCH SỬ KIỂM QUỸ & QUY CHUẨN MÁY IN EPSON TM-T8 -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Hướng dẫn máy in Epson TM-T8 (5 Cột) -->
+        <div class="lg:col-span-5 liquid-glass rounded-3xl p-6 shadow-liquid flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2.5 mb-4 text-slate-900 font-bold text-sm">
+              <span class="p-2 rounded-2xl bg-amber-50 text-amber-600">
+                <i data-lucide="printer-check" class="w-5 h-5"></i>
+              </span>
+              <span>Tối ưu hóa Máy In Nhiệt Epson TM-T8</span>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+              <div class="p-3.5 rounded-2xl bg-white border border-slate-200/70 shadow-xs">
+                <strong class="text-slate-900 block mb-1">Khổ giấy tiêu chuẩn 80mm:</strong>
+                Tương thích hoàn hảo với dòng máy Epson TM-T82, TM-T82II, TM-T82III, TM-T88IV, TM-T88V, TM-T88VI và các máy in bill nhiệt cổng USB/LAN phổ biến.
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-white border border-slate-200/70 shadow-xs">
+                <strong class="text-slate-900 block mb-1">Thiết kế đơn sắc siêu nét:</strong>
+                Được căn chỉnh chính xác chiều rộng 72mm (576 dots), font chữ đơn cách (Monospace) rõ nét, không bị nhòe mực nhiệt và hỗ trợ lệnh cắt giấy tự động.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-400">Xem trước hóa đơn nhiệt:</span>
+            <button onclick="openEpsonReceiptModal()" class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 transition">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+              Mở bản xem trước
+            </button>
+          </div>
+        </div>
+
+        <!-- Lịch sử kiểm quỹ gần đây (7 Cột) -->
+        <div class="lg:col-span-7 liquid-glass rounded-3xl p-6 shadow-liquid flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
+              <div class="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                <span class="p-1.5 rounded-xl bg-purple-50 text-purple-600">
+                  <i data-lucide="history" class="w-4 h-4"></i>
+                </span>
+                <span>Lịch sử kiểm quỹ trên máy</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="saveCurrentSession()" class="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center gap-1 shadow-sm transition">
+                  <i data-lucide="save" class="w-3.5 h-3.5"></i>
+                  Lưu phiên này
+                </button>
+                <button onclick="clearHistory()" class="text-slate-400 hover:text-rose-500 text-xs transition" title="Xóa toàn bộ">
+                  Xóa
+                </button>
+              </div>
+            </div>
+
+            <div id="historyListContainer" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+              <!-- Render danh sách lịch sử -->
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+            <span>Dữ liệu được lưu trữ tự động trong trình duyệt này.</span>
+            <span id="historyCount" class="font-mono font-semibold">0 bản ghi</span>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL XEM TRƯỚC VÀ IN BILL NHIỆT EPSON TM-T8 (80MM) -->
+  <div id="epsonReceiptModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden no-print">
+    <div class="liquid-glass max-w-md w-full rounded-3xl p-6 shadow-2xl border border-white/90 max-h-[92vh] flex flex-col justify-between">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <div class="p-2 rounded-xl bg-sky-100 text-sky-700">
+            <i data-lucide="receipt" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm">Xem Trước Hóa Đơn Nhiệt 80mm</h4>
+            <p class="text-[11px] text-slate-500">Mẫu in chuyên dụng máy Epson TM-T8</p>
+          </div>
+        </div>
+        <button onclick="closeEpsonReceiptModal()" class="p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Simulated 80mm Receipt Paper Preview -->
+      <div class="my-4 overflow-y-auto py-3 px-2 flex justify-center bg-slate-100/70 rounded-2xl border border-slate-200/60">
+        <div class="receipt-paper w-[300px] p-5 text-black border border-slate-300 shadow-md">
+          
+          <div class="text-center font-bold text-sm tracking-wider uppercase">
+            BIÊN BẢN KIỂM QUỸ
+          </div>
+          <div class="text-center text-[10px] text-gray-600 mt-0.5 uppercase tracking-wide">
+            (EPSON TM-T8 THERMAL)
+          </div>
+
+          <div class="border-t border-dashed border-black my-2"></div>
+
+          <div class="text-[11px] leading-tight space-y-1">
+            <div class="flex justify-between">
+              <span>Ngày giờ:</span>
+              <span id="recDate">...</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Thu ngân:</span>
+              <span id="recAuditor" class="font-semibold">...</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Ca/Quầy:</span>
+              <span id="recShift">...</span>
+            </div>
+          </div>
+
+          <div class="border-t border-dashed border-black my-2"></div>
+
+          <!-- Bảng kê mệnh giá -->
+          <table class="w-full text-[11px]">
+            <thead>
+              <tr class="font-bold border-b border-black">
+                <td class="pb-1 text-left">MỆNH GIÁ</td>
+                <td class="pb-1 text-center">SL</td>
+                <td class="pb-1 text-right">THÀNH TIỀN</td>
+              </tr>
+            </thead>
+            <tbody id="recTableBody" class="divide-y divide-gray-200">
+              <!-- Render động các mệnh giá có số lượng > 0 -->
+            </tbody>
+          </table>
+
+          <div class="border-t border-dashed border-black my-2"></div>
+
+          <!-- Tổng kết -->
+          <div class="text-[11px] space-y-1">
+            <div class="flex justify-between">
+              <span>Tổng số tờ:</span>
+              <span id="recTotalBills" class="font-bold">0 tờ</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Tiền sổ sách:</span>
+              <span id="recExpected" class="font-bold">0 đ</span>
+            </div>
+            <div class="flex justify-between font-bold text-xs pt-1 border-t border-black">
+              <span>THỰC ĐẾM:</span>
+              <span id="recActual">0 đ</span>
+            </div>
+            <div class="flex justify-between font-bold text-xs pt-0.5">
+              <span>CHÊNH LỆCH:</span>
+              <span id="recDiff" class="text-sm">0 đ</span>
+            </div>
+            <div id="recNotesWrap" class="text-[10px] italic pt-1 text-gray-700">
+              Ghi chú: <span id="recNotes">Không có</span>
+            </div>
+          </div>
+
+          <div class="border-t border-dashed border-black my-3"></div>
+
+          <!-- Chữ ký 2 bên trên hóa đơn nhiệt -->
+          <div class="grid grid-cols-2 text-center text-[10px] mt-4 pt-1">
+            <div>
+              <p class="font-bold">THU NGÂN</p>
+              <div class="h-10"></div>
+              <p id="recSignAuditor">...</p>
+            </div>
+            <div>
+              <p class="font-bold">QUẢN LÝ</p>
+              <div class="h-10"></div>
+              <p>(Ký nhận)</p>
+            </div>
+          </div>
+
+          <div class="text-center text-[9px] text-gray-500 mt-4 border-t border-dotted border-gray-400 pt-1">
+            --- [LỆNH CẮT GIẤY TỰ ĐỘNG] ---
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action buttons in Modal -->
+      <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+        <button onclick="printNowEpson()" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-sky-500/20 active:scale-95 transition">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>In Ngay Ra Máy Epson</span>
+        </button>
+        <button onclick="closeEpsonReceiptModal()" class="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition">
+          Đóng
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHẦN IN THỰC TẾ RA MÁY IN NHIỆT EPSON TM-T8 (CHỈ KÍCH HOẠT KHI IN BẰNG @media print) -->
+  <div id="epsonThermalReceiptPrint">
+    <div class="epson-title">BIÊN BẢN KIỂM QUỸ</div>
+    <div class="epson-sub">MÁY IN NHIỆT EPSON TM-T8 (80MM)</div>
+    
+    <div class="epson-divider"></div>
+    
+    <div>Thời gian : <span id="prtDate"></span></div>
+    <div>Thu ngân  : <span id="prtAuditor"></span></div>
+    <div>Ca / Quầy : <span id="prtShift"></span></div>
+    
+    <div class="epson-divider"></div>
+    
+    <table class="epson-table">
+      <thead>
+        <tr style="border-bottom: 1px solid #000;">
+          <th style="text-align: left;">MỆNH GIÁ</th>
+          <th style="text-align: center;">SL</th>
+          <th style="text-align: right;">THÀNH TIỀN</th>
+        </tr>
+      </thead>
+      <tbody id="prtTableBody">
+        <!-- Render khi in -->
+      </tbody>
+    </table>
+
+    <div class="epson-divider"></div>
+
+    <table class="epson-table">
+      <tr>
+        <td>Tổng số tờ:</td>
+        <td style="text-align: right; font-weight: bold;"><span id="prtTotalBills"></span> tờ</td>
+      </tr>
+      <tr>
+        <td>Sổ sách (POS):</td>
+        <td style="text-align: right; font-weight: bold;"><span id="prtExpected"></span></td>
+      </tr>
+      <tr style="font-size: 13px; font-weight: bold;">
+        <td>THỰC ĐẾM:</td>
+        <td style="text-align: right;"><span id="prtActual"></span></td>
+      </tr>
+      <tr style="font-size: 13px; font-weight: bold;">
+        <td>CHÊNH LỆCH:</td>
+        <td style="text-align: right;"><span id="prtDiff"></span></td>
+      </tr>
+    </table>
+
+    <div id="prtNotesWrap" style="font-size: 10px; margin-top: 4px;">
+      Ghi chú: <span id="prtNotes"></span>
+    </div>
+
+    <div class="epson-double-divider"></div>
+
+    <table class="epson-table" style="margin-top: 10px; text-align: center;">
+      <tr>
+        <td style="width: 50%; font-weight: bold;">THU NGÂN</td>
+        <td style="width: 50%; font-weight: bold;">QUẢN LÝ</td>
+      </tr>
+      <tr>
+        <td style="height: 45px;"></td>
+        <td style="height: 45px;"></td>
+      </tr>
+      <tr>
+        <td id="prtSignAuditor" style="font-size: 10px;"></td>
+        <td style="font-size: 10px;">(Ký & ghi rõ họ tên)</td>
+      </tr>
+    </table>
+
+    <div class="epson-divider" style="margin-top: 15px;"></div>
+    <div style="text-align: center; font-size: 9px; margin-top: 5px;">
+      Cảm ơn & Chúc một ca làm việc thành công!
+    </div>
+    <div style="height: 15mm;"></div> <!-- Dải đệm cho dao cắt giấy tự động của máy Epson -->
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 10 Mệnh giá tiền Việt Nam theo đề bài
+    const DENOMINATIONS = [
+      { value: 500000, label: '500.000 ₫', color: '#10b981', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+      { value: 200000, label: '200.000 ₫', color: '#f97316', badge: 'bg-orange-50 text-orange-700 border-orange-200' },
+      { value: 100000, label: '100.000 ₫', color: '#06b6d4', badge: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
+      { value: 50000,  label: '50.000 ₫',  color: '#ec4899', badge: 'bg-pink-50 text-pink-700 border-pink-200' },
+      { value: 20000,  label: '20.000 ₫',  color: '#3b82f6', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
+      { value: 10000,  label: '10.000 ₫',  color: '#eab308', badge: 'bg-amber-50 text-amber-700 border-amber-200' },
+      { value: 5000,   label: '5.000 ₫',   color: '#a855f7', badge: 'bg-purple-50 text-purple-700 border-purple-200' },
+      { value: 2000,   label: '2.000 ₫',   color: '#84cc16', badge: 'bg-lime-50 text-lime-700 border-lime-200' },
+      { value: 1000,   label: '1.000 ₫',   color: '#64748b', badge: 'bg-slate-100 text-slate-700 border-slate-200' },
+      { value: 500,    label: '500 ₫',     color: '#94a3b8', badge: 'bg-slate-100 text-slate-600 border-slate-200' },
+    ];
+
+    let counts = {};
+    let isHighToLow = true;
+    let expectedAmount = 0;
+    let soundEnabled = true;
+
+    // Web Audio Synthesizer (Apple-like subtle clicks & feedback)
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = AudioContextClass ? new AudioContextClass() : null;
+
+    function playTone(freq = 600, type = 'sine', duration = 0.08) {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playSuccessChime() {
+      if (!soundEnabled) return;
+      setTimeout(() => playTone(523.25, 'triangle', 0.1), 0);
+      setTimeout(() => playTone(659.25, 'triangle', 0.12), 80);
+      setTimeout(() => playTone(783.99, 'triangle', 0.15), 160);
+      setTimeout(() => playTone(1046.50, 'triangle', 0.3), 240);
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('soundIcon');
+      if (soundEnabled) {
+        icon.setAttribute('data-lucide', 'volume-2');
+        icon.className = 'w-4 h-4 text-emerald-600';
+        showToast('Đã bật âm thanh thao tác', 'info');
+        playTone(880, 'sine', 0.1);
+      } else {
+        icon.setAttribute('data-lucide', 'volume-x');
+        icon.className = 'w-4 h-4 text-slate-400';
+        showToast('Đã tắt âm thanh', 'info');
+      }
+      lucide.createIcons();
+    }
+
+    // Number helpers
+    function formatCurrency(number) {
+      return new Intl.NumberFormat('vi-VN').format(Math.round(number));
+    }
+
+    function parseVND(str) {
+      if (!str) return 0;
+      const cleaned = str.toString().replace(/[^0-9]/g, '');
+      return parseInt(cleaned, 10) || 0;
+    }
+
+    DENOMINATIONS.forEach(d => {
+      counts[d.value] = 0;
+    });
+
+    // Handle Expected Amount (Dòng tiền cần kiểm tra)
+    function handleExpectedAmountInput(el) {
+      const rawVal = parseVND(el.value);
+      expectedAmount = rawVal;
+      el.value = rawVal > 0 ? formatCurrency(rawVal) : '';
+      playTone(450, 'sine', 0.04);
+      calculateAll();
+    }
+
+    function setExpectedQuick(val) {
+      expectedAmount = val;
+      const input = document.getElementById('expectedAmountInput');
+      input.value = val > 0 ? formatCurrency(val) : '';
+      playTone(600, 'sine', 0.05);
+      calculateAll();
+      showToast(`Đã đặt dòng tiền cần kiểm tra: ${formatCurrency(val)} ₫`, 'info');
+    }
+
+    function handleCountChange(value, inputElement) {
+      const parsed = Math.max(0, parseInt(inputElement.value, 10) || 0);
+      counts[value] = parsed;
+      inputElement.value = parsed > 0 ? parsed : '';
+      playTone(550, 'sine', 0.03);
+      calculateAll();
+    }
+
+    function quickAdd(value, delta) {
+      counts[value] = Math.max(0, (counts[value] || 0) + delta);
+      const inputEl = document.getElementById(`input-${value}`);
+      if (inputEl) {
+        inputEl.value = counts[value] > 0 ? counts[value] : '';
+      }
+      playTone(620 + Math.min(value / 1000, 350), 'sine', 0.04);
+      calculateAll();
+    }
+
+    function clearDenom(value) {
+      counts[value] = 0;
+      const inputEl = document.getElementById(`input-${value}`);
+      if (inputEl) inputEl.value = '';
+      playTone(320, 'sine', 0.05);
+      calculateAll();
+    }
+
+    function clearAllDenominations() {
+      DENOMINATIONS.forEach(d => {
+        counts[d.value] = 0;
+        const inputEl = document.getElementById(`input-${d.value}`);
+        if (inputEl) inputEl.value = '';
+      });
+      playTone(300, 'sine', 0.08);
+      calculateAll();
+      showToast('Đã xóa tất cả số tờ', 'info');
+    }
+
+    function confirmResetAll() {
+      if (confirm('Bạn có chắc chắn muốn làm mới toàn bộ bảng kiểm quỹ?')) {
+        clearAllDenominations();
+        setExpectedQuick(0);
+        document.getElementById('auditNotes').value = '';
+        showToast('Đã làm mới toàn bộ phiên kiểm quỹ', 'info');
+      }
+    }
+
+    function toggleSortOrder() {
+      isHighToLow = !isHighToLow;
+      document.getElementById('sortOrderLabel').innerHTML = isHighToLow ? 'Cao &rarr; Thấp' : 'Thấp &rarr; Cao';
+      renderTable();
+    }
+
+    // Render Table Rows
+    function renderTable() {
+      const tbody = document.getElementById('denominationTableBody');
+      const list = [...DENOMINATIONS];
+      if (!isHighToLow) list.reverse();
+
+      tbody.innerHTML = list.map((item, idx) => {
+        const val = item.value;
+        const count = counts[val] || 0;
+        const subtotal = count * val;
+
+        return `
+          <tr class="hover:bg-sky-50/40 transition group">
+            <!-- STT -->
+            <td class="py-3 px-5 text-center text-xs text-slate-400 font-sans">
+              ${idx + 1}
+            </td>
+
+            <!-- Mệnh giá -->
+            <td class="py-3 px-5">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xl border font-mono font-bold text-xs ${item.badge} shadow-xs">
+                <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+                <span>${item.label}</span>
+              </div>
+            </td>
+
+            <!-- Input số tờ -->
+            <td class="py-3 px-5">
+              <div class="relative flex items-center max-w-[170px]">
+                <input 
+                  type="number" 
+                  min="0"
+                  step="1"
+                  placeholder="0"
+                  id="input-${val}"
+                  value="${count > 0 ? count : ''}"
+                  oninput="handleCountChange(${val}, this)"
+                  onkeydown="handleRowKeydown(event, ${val})"
+                  class="denom-input w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-right font-mono font-bold text-base text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition shadow-xs pr-10"
+                >
+                <span class="absolute right-3 text-xs font-sans text-slate-400 pointer-events-none">tờ</span>
+              </div>
+            </td>
+
+            <!-- Quick Add Buttons -->
+            <td class="py-3 px-5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <button type="button" onclick="quickAdd(${val}, 1)" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-mono font-medium transition border border-slate-200/80 shadow-2xs">+1</button>
+                <button type="button" onclick="quickAdd(${val}, 5)" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-mono font-medium transition border border-slate-200/80 shadow-2xs">+5</button>
+                <button type="button" onclick="quickAdd(${val}, 10)" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-mono font-medium transition border border-slate-200/80 shadow-2xs">+10</button>
+                <button type="button" onclick="quickAdd(${val}, 50)" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-mono font-medium transition border border-slate-200/80 shadow-2xs">+50</button>
+                <button type="button" onclick="quickAdd(${val}, 100)" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-mono font-bold transition border border-emerald-200/80 shadow-2xs" title="Cộng thêm 1 xấp 100 tờ">+100</button>
+                <button type="button" onclick="clearDenom(${val})" class="p-1 rounded-md hover:bg-rose-50 text-slate-400 hover:text-rose-500 transition" title="Xóa dòng này">
+                  <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </td>
+
+            <!-- Thành tiền -->
+            <td class="py-3 px-5 text-right">
+              <span id="subtotal-${val}" class="font-mono font-bold text-base ${subtotal > 0 ? 'text-slate-900' : 'text-slate-300'}">
+                ${formatCurrency(subtotal)} ₫
+              </span>
+            </td>
+
+            <!-- Tỷ trọng -->
+            <td class="py-3 px-5 text-right hidden sm:table-cell">
+              <span id="percent-${val}" class="text-xs font-mono text-slate-400">
+                0%
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function handleRowKeydown(e, currentVal) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const inputs = Array.from(document.querySelectorAll('.denom-input'));
+        const currentIndex = inputs.findIndex(inp => inp.id === `input-${currentVal}`);
+        if (currentIndex !== -1 && currentIndex < inputs.length - 1) {
+          inputs[currentIndex + 1].focus();
+          inputs[currentIndex + 1].select();
+        }
+      }
+    }
+
+    // MAIN CALCULATION & ALERT STATUS LOGIC
+    let lastStatusKey = '';
+
+    function calculateAll() {
+      let totalActual = 0;
+      let totalBills = 0;
+
+      DENOMINATIONS.forEach(item => {
+        const val = item.value;
+        const count = counts[val] || 0;
+        const subtotal = count * val;
+        totalActual += subtotal;
+        totalBills += count;
+
+        const subtotalEl = document.getElementById(`subtotal-${val}`);
+        if (subtotalEl) {
+          subtotalEl.innerText = `${formatCurrency(subtotal)} ₫`;
+          subtotalEl.className = `font-mono font-bold text-base ${subtotal > 0 ? 'text-slate-900' : 'text-slate-300'}`;
+        }
+      });
+
+      DENOMINATIONS.forEach(item => {
+        const val = item.value;
+        const count = counts[val] || 0;
+        const subtotal = count * val;
+        const pct = totalActual > 0 ? ((subtotal / totalActual) * 100).toFixed(1) : '0';
+        const pctEl = document.getElementById(`percent-${val}`);
+        if (pctEl) pctEl.innerText = `${pct}%`;
+      });
+
+      document.getElementById('totalBillCount').innerText = formatCurrency(totalBills);
+      document.getElementById('footerTotalAmount').innerText = formatCurrency(totalActual);
+
+      document.getElementById('displayExpectedAmount').innerText = `${formatCurrency(expectedAmount)} ₫`;
+      document.getElementById('displayActualAmount').innerText = `${formatCurrency(totalActual)} ₫`;
+
+      const difference = totalActual - expectedAmount;
+      
+      const progressPercent = expectedAmount > 0 
+        ? Math.min(200, Math.round((totalActual / expectedAmount) * 100))
+        : (totalActual > 0 ? 100 : 0);
+      
+      document.getElementById('progressText').innerText = `${progressPercent}%`;
+      const pBar = document.getElementById('progressBar');
+      pBar.style.width = `${Math.min(100, progressPercent)}%`;
+
+      updateAlertStatus(totalActual, expectedAmount, difference, totalBills);
+      renderBreakdownBar(totalActual);
+    }
+
+    function updateAlertStatus(actual, expected, diff, totalBills) {
+      const banner = document.getElementById('alertBanner');
+      const badge = document.getElementById('statusBadge');
+      const headline = document.getElementById('statusHeadline');
+      const desc = document.getElementById('statusDesc');
+      const diffEl = document.getElementById('displayDiffAmount');
+      const diffPctEl = document.getElementById('diffPercentage');
+      const iconBox = document.getElementById('statusIconBox');
+      const icon = document.getElementById('statusIcon');
+      const pBar = document.getElementById('progressBar');
+
+      let currentStatus = '';
+
+      if (expected === 0 && actual === 0) {
+        currentStatus = 'empty';
+        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid border relative overflow-hidden bg-white/90 border-slate-200/80';
+        badge.className = 'px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-200';
+        badge.innerText = 'Đang chờ kiểm đếm';
+        diffPctEl.innerText = '';
+        headline.innerText = 'Vui lòng nhập dòng tiền sổ sách và số tờ';
+        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-slate-900';
+        desc.innerText = 'Nhập số tiền mục tiêu cần đối soát ở trên và điền số tờ của các mệnh giá tương ứng.';
+        diffEl.innerText = '0 ₫';
+        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-slate-400 mt-0.5';
+        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-slate-100 text-slate-500';
+        icon.setAttribute('data-lucide', 'scale');
+        pBar.className = 'h-full bg-slate-300 rounded-full transition-all duration-300';
+      } 
+      else if (diff === 0 && expected > 0) {
+        // KHỚP QUỸ TUYỆT ĐỐI (APPLE SYSTEM GREEN)
+        currentStatus = 'matched';
+        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid-hover border-2 relative overflow-hidden bg-gradient-to-r from-emerald-50/90 via-white to-emerald-50/60 border-emerald-500 shadow-emerald-500/10';
+        badge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-emerald-500 text-white shadow-sm flex items-center gap-1.5';
+        badge.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i> KHỚP QUỸ TUYỆT ĐỐI (100%)';
+        diffPctEl.innerText = 'Chênh lệch 0 ₫';
+        headline.innerText = 'Cân đối hoàn hảo! Tiền thực tế khớp hoàn toàn với sổ sách';
+        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-emerald-800';
+        desc.innerText = `Đã kiểm đếm đủ ${formatCurrency(totalBills)} tờ, tổng tiền chính xác ${formatCurrency(actual)} ₫. Đủ điều kiện bàn giao hoặc chốt ca an toàn.`;
+        diffEl.innerText = '0 ₫';
+        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-emerald-600 mt-0.5';
+        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-emerald-500 text-white animate-bounce';
+        icon.setAttribute('data-lucide', 'check-check');
+        pBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-300';
+
+        if (lastStatusKey !== 'matched') {
+          playSuccessChime();
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 70, spread: 80, origin: { y: 0.65 } });
+          }
+        }
+      } 
+      else if (diff < 0) {
+        // THIẾU QUỸ (APPLE SYSTEM RED)
+        currentStatus = 'shortage';
+        const missingAmount = Math.abs(diff);
+        const percentLost = expected > 0 ? ((missingAmount / expected) * 100).toFixed(1) : 0;
+
+        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid border-2 relative overflow-hidden bg-gradient-to-r from-rose-50/90 via-white to-rose-50/50 border-rose-500 shadow-rose-500/10';
+        badge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-rose-500 text-white shadow-sm flex items-center gap-1.5';
+        badge.innerHTML = '<i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> CẢNH BÁO: THIẾU QUỸ TIỀN MẶT';
+        diffPctEl.innerText = `(Hụt ${percentLost}%)`;
+        headline.innerText = `Quỹ bị THIẾU: -${formatCurrency(missingAmount)} ₫`;
+        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-rose-700';
+        desc.innerText = 'Tiền mặt thực đếm nhỏ hơn tiền sổ sách. Vui lòng rà soát lại hóa đơn hủy, đơn chưa thanh toán hoặc khay tiền lẻ.';
+        diffEl.innerText = `-${formatCurrency(missingAmount)} ₫`;
+        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-rose-600 mt-0.5';
+        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-rose-500 text-white animate-pulse';
+        icon.setAttribute('data-lucide', 'trending-down');
+        pBar.className = 'h-full bg-rose-500 rounded-full transition-all duration-300';
+      } 
+      else {
+        // THỪA QUỸ (APPLE SYSTEM ORANGE / AMBER)
+        currentStatus = 'surplus';
+        const surplusAmount = diff;
+        const percentSurplus = expected > 0 ? ((surplusAmount / expected) * 100).toFixed(1) : 0;
+
+        banner.className = 'rounded-3xl transition-all duration-500 p-6 shadow-liquid border-2 relative overflow-hidden bg-gradient-to-r from-amber-50/90 via-white to-amber-50/50 border-amber-500 shadow-amber-500/10';
+        badge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-amber-500 text-white shadow-sm flex items-center gap-1.5';
+        badge.innerHTML = '<i data-lucide="info" class="w-3.5 h-3.5"></i> THÔNG BÁO: THỪA QUỸ TIỀN MẶT';
+        diffPctEl.innerText = `(Dư +${percentSurplus}%)`;
+        headline.innerText = `Quỹ bị THỪA: +${formatCurrency(surplusAmount)} ₫`;
+        headline.className = 'text-xl sm:text-2xl font-extrabold tracking-tight mt-1.5 text-amber-800';
+        desc.innerText = 'Tiền mặt thực đếm nhiều hơn sổ sách ghi nhận. Vui lòng kiểm tra tiền boa (tip), khách quên tiền thối hoặc đơn chưa gạch nợ.';
+        diffEl.innerText = `+${formatCurrency(surplusAmount)} ₫`;
+        diffEl.className = 'text-lg sm:text-xl font-mono font-bold text-amber-600 mt-0.5';
+        iconBox.className = 'w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md bg-amber-500 text-white';
+        icon.setAttribute('data-lucide', 'trending-up');
+        pBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-300';
+      }
+
+      lastStatusKey = currentStatus;
+      lucide.createIcons();
+    }
+
+    function renderBreakdownBar(totalActual) {
+      const container = document.getElementById('breakdownBar');
+      const legendText = document.getElementById('breakdownLegendText');
+
+      if (totalActual === 0) {
+        container.innerHTML = '<div class="w-full h-full bg-slate-200"></div>';
+        legendText.innerText = 'Chưa có tiền thực đếm';
+        return;
+      }
+
+      const segments = [];
+      const topDenoms = [];
+
+      DENOMINATIONS.forEach(d => {
+        const count = counts[d.value] || 0;
+        const subtotal = count * d.value;
+        if (subtotal > 0) {
+          const pct = (subtotal / totalActual) * 100;
+          segments.push(`
+            <div style="width: ${pct}%; background-color: ${d.color};" class="h-full hover:opacity-80 transition cursor-pointer" title="${d.label}: ${formatCurrency(subtotal)} ₫ (${pct.toFixed(1)}%)"></div>
+          `);
+          if (pct >= 5) {
+            topDenoms.push(`${d.label} (${pct.toFixed(0)}%)`);
+          }
+        }
+      });
+
+      container.innerHTML = segments.join('');
+      legendText.innerText = topDenoms.slice(0, 4).join(' • ') || 'Đã phân bổ các mệnh giá';
+    }
+
+    // SAO CHÉP BÁO CÁO GỬI ZALO / TELEGRAM
+    function copyAuditReport() {
+      let totalActual = 0;
+      let totalBills = 0;
+      const lines = [];
+
+      DENOMINATIONS.forEach(d => {
+        const c = counts[d.value] || 0;
+        if (c > 0) {
+          totalActual += c * d.value;
+          totalBills += c;
+          lines.push(`• ${d.label}: ${c} tờ = ${formatCurrency(c * d.value)} đ`);
+        }
+      });
+
+      const auditor = document.getElementById('auditorName').value || 'Thu ngân';
+      const shift = document.getElementById('shiftName').value || 'Ca làm việc';
+      const notes = document.getElementById('auditNotes').value || 'Không có';
+      const diff = totalActual - expectedAmount;
+      const now = new Date().toLocaleString('vi-VN');
+
+      let resultText = 'KHỚP TUYỆT ĐỐI (0 đ)';
+      if (diff < 0) resultText = `THIẾU: -${formatCurrency(Math.abs(diff))} đ ⚠️`;
+      if (diff > 0) resultText = `THỪA: +${formatCurrency(diff)} đ ℹ️`;
+
+      const report = `📋 BÁO CÁO KIỂM QUỸ TIỀN MẶT
+━━━━━━━━━━━━━━━━━━━━
+⏰ Thời gian: ${now}
+👤 Người kiểm: ${auditor}
+📍 Ca/Quầy: ${shift}
+
+💵 SỔ SÁCH MỤC TIÊU: ${formatCurrency(expectedAmount)} đ
+💰 THỰC TẾ KIỂM ĐẾM: ${formatCurrency(totalActual)} đ (${totalBills} tờ)
+📊 KẾT QUẢ ĐỐI SOÁT: ${resultText}
+📝 Ghi chú: ${notes}
+
+Chi tiết các mệnh giá:
+${lines.length > 0 ? lines.join('\n') : 'Chưa nhập số tờ'}
+━━━━━━━━━━━━━━━━━━━━
+(CashAudit Apple Liquid System)`;
+
+      navigator.clipboard.writeText(report).then(() => {
+        playTone(900, 'sine', 0.1);
+        showToast('Đã sao chép báo cáo kiểm quỹ vào Clipboard! Sẵn sàng dán gửi Zalo/Telegram.', 'success');
+      }).catch(() => {
+        showToast('Không thể sao chép, vui lòng thử lại', 'error');
+      });
+    }
+
+    // ============================================================
+    // LOGIC IN HÓA ĐƠN NHIỆT MÁY IN EPSON TM-T8 (80MM)
+    // ============================================================
+    function prepareEpsonThermalReceiptData() {
+      let totalActual = 0;
+      let totalBills = 0;
+      const activeRows = [];
+
+      DENOMINATIONS.forEach(d => {
+        const c = counts[d.value] || 0;
+        const subtotal = c * d.value;
+        if (c > 0) {
+          totalActual += subtotal;
+          totalBills += c;
+          activeRows.push({
+            label: d.label,
+            count: c,
+            subtotal: subtotal
+          });
+        }
+      });
+
+      const auditor = document.getElementById('auditorName').value || 'Thu ngân';
+      const shift = document.getElementById('shiftName').value || 'Quầy 01';
+      const notes = document.getElementById('auditNotes').value || 'Không có';
+      const diff = totalActual - expectedAmount;
+      const nowStr = new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+      let diffStr = '0 đ (KHỚP 100%)';
+      if (diff < 0) diffStr = `-${formatCurrency(Math.abs(diff))} đ (THIẾU)`;
+      if (diff > 0) diffStr = `+${formatCurrency(diff)} đ (THỪA)`;
+
+      // 1. Cập nhật dữ liệu cho Modal Xem Trước
+      document.getElementById('recDate').innerText = nowStr;
+      document.getElementById('recAuditor').innerText = auditor;
+      document.getElementById('recSignAuditor').innerText = auditor;
+      document.getElementById('recShift').innerText = shift;
+      document.getElementById('recTotalBills').innerText = `${totalBills} tờ`;
+      document.getElementById('recExpected').innerText = `${formatCurrency(expectedAmount)} đ`;
+      document.getElementById('recActual').innerText = `${formatCurrency(totalActual)} đ`;
+      document.getElementById('recDiff').innerText = diffStr;
+      document.getElementById('recNotes').innerText = notes;
+
+      const recTable = document.getElementById('recTableBody');
+      if (activeRows.length === 0) {
+        recTable.innerHTML = '<tr><td colspan="3" class="py-2 text-center text-gray-500 italic">Chưa nhập số tờ tiền</td></tr>';
+      } else {
+        recTable.innerHTML = activeRows.map(r => `
+          <tr class="py-0.5">
+            <td class="text-left font-semibold">${r.label}</td>
+            <td class="text-center font-bold">${r.count}</td>
+            <td class="text-right">${formatCurrency(r.subtotal)} đ</td>
+          </tr>
+        `).join('');
+      }
+
+      // 2. Cập nhật dữ liệu cho Vùng in thật chuẩn máy in Epson TM-T8
+      document.getElementById('prtDate').innerText = nowStr;
+      document.getElementById('prtAuditor').innerText = auditor;
+      document.getElementById('prtSignAuditor').innerText = auditor;
+      document.getElementById('prtShift').innerText = shift;
+      document.getElementById('prtTotalBills').innerText = totalBills;
+      document.getElementById('prtExpected').innerText = `${formatCurrency(expectedAmount)} đ`;
+      document.getElementById('prtActual').innerText = `${formatCurrency(totalActual)} đ`;
+      document.getElementById('prtDiff').innerText = diffStr;
+      document.getElementById('prtNotes').innerText = notes;
+
+      const prtTable = document.getElementById('prtTableBody');
+      if (activeRows.length === 0) {
+        prtTable.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 4px;">Chưa kiểm đếm tờ nào</td></tr>';
+      } else {
+        prtTable.innerHTML = activeRows.map(r => `
+          <tr>
+            <td style="text-align: left;">${r.label}</td>
+            <td style="text-align: center; font-weight: bold;">${r.count}</td>
+            <td style="text-align: right;">${formatCurrency(r.subtotal)} đ</td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function openEpsonReceiptModal() {
+      prepareEpsonThermalReceiptData();
+      document.getElementById('epsonReceiptModal').classList.remove('hidden');
+      playTone(700, 'sine', 0.06);
+    }
+
+    function closeEpsonReceiptModal() {
+      document.getElementById('epsonReceiptModal').classList.add('hidden');
+    }
+
+    function printNowEpson() {
+      prepareEpsonThermalReceiptData();
+      closeEpsonReceiptModal();
+      // Kích hoạt hộp thoại in của trình duyệt (Đã cấu hình @media print khổ 80mm tối ưu cho TM-T8)
+      window.print();
+    }
+
+    // Tự động chuẩn bị trước khi in nếu người dùng bấm Ctrl + P trực tiếp
+    window.onbeforeprint = () => {
+      prepareEpsonThermalReceiptData();
+    };
+
+    // LOCAL STORAGE HISTORY
+    const STORAGE_KEY = 'cashaudit_sessions_apple_v1';
+
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCurrentSession() {
+      let totalActual = 0;
+      let totalBills = 0;
+      DENOMINATIONS.forEach(d => {
+        const c = counts[d.value] || 0;
+        totalActual += c * d.value;
+        totalBills += c;
+      });
+
+      if (expectedAmount === 0 && totalActual === 0) {
+        showToast('Vui lòng nhập dữ liệu trước khi lưu phiên', 'warning');
+        return;
+      }
+
+      const record = {
+        id: Date.now(),
+        timeFormatted: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+        dateFormatted: new Date().toLocaleDateString('vi-VN'),
+        auditor: document.getElementById('auditorName').value || 'Thu ngân',
+        shift: document.getElementById('shiftName').value || 'Ca làm việc',
+        notes: document.getElementById('auditNotes').value || '',
+        expected: expectedAmount,
+        actual: totalActual,
+        diff: totalActual - expectedAmount,
+        totalBills: totalBills,
+        counts: { ...counts }
+      };
+
+      const history = getHistory();
+      history.unshift(record);
+      if (history.length > 20) history.pop();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+
+      playTone(850, 'sine', 0.08);
+      showToast('Đã lưu phiên kiểm quỹ vào lịch sử thành công!', 'success');
+      renderHistoryList();
+    }
+
+    function restoreSession(id) {
+      const history = getHistory();
+      const item = history.find(h => h.id === id);
+      if (!item) return;
+
+      if (confirm(`Khôi phục lại phiên kiểm quỹ lúc ${item.timeFormatted} - ${item.dateFormatted}?`)) {
+        document.getElementById('auditorName').value = item.auditor || '';
+        document.getElementById('shiftName').value = item.shift || '';
+        document.getElementById('auditNotes').value = item.notes || '';
+        
+        setExpectedQuick(item.expected || 0);
+
+        DENOMINATIONS.forEach(d => {
+          counts[d.value] = item.counts ? (item.counts[d.value] || 0) : 0;
+          const inputEl = document.getElementById(`input-${d.value}`);
+          if (inputEl) inputEl.value = counts[d.value] > 0 ? counts[d.value] : '';
+        });
+
+        calculateAll();
+        showToast('Đã khôi phục dữ liệu phiên kiểm quỹ', 'info');
+      }
+    }
+
+    function deleteHistoryItem(id, e) {
+      e.stopPropagation();
+      let history = getHistory();
+      history = history.filter(h => h.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      renderHistoryList();
+      showToast('Đã xóa bản ghi', 'info');
+    }
+
+    function clearHistory() {
+      if (confirm('Bạn có chắc muốn xóa sạch toàn bộ lịch sử trên máy này?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        renderHistoryList();
+        showToast('Đã xóa sạch lịch sử', 'info');
+      }
+    }
+
+    function renderHistoryList() {
+      const listContainer = document.getElementById('historyListContainer');
+      const countEl = document.getElementById('historyCount');
+      const history = getHistory();
+
+      countEl.innerText = `${history.length} bản ghi`;
+
+      if (history.length === 0) {
+        listContainer.innerHTML = `
+          <div class="text-center py-6 text-slate-400 text-xs">
+            <i data-lucide="inbox" class="w-7 h-7 mx-auto mb-2 text-slate-300"></i>
+            Chưa có phiên kiểm quỹ nào được lưu.
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      listContainer.innerHTML = history.map(item => {
+        let statusBadge = '<span class="text-emerald-600 font-bold">Khớp 100%</span>';
+        if (item.diff < 0) statusBadge = `<span class="text-rose-600 font-bold">Thiếu -${formatCurrency(Math.abs(item.diff))} ₫</span>`;
+        if (item.diff > 0) statusBadge = `<span class="text-amber-600 font-bold">Thừa +${formatCurrency(item.diff)} ₫</span>`;
+
+        return `
+          <div onclick="restoreSession(${item.id})" class="p-3.5 rounded-2xl bg-white hover:bg-sky-50/50 border border-slate-200/80 transition cursor-pointer flex items-center justify-between text-xs group shadow-2xs">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-900">${item.timeFormatted}</span>
+                <span class="text-slate-300">•</span>
+                <span class="text-slate-500">${item.dateFormatted}</span>
+                <span class="text-slate-300">•</span>
+                <span class="text-slate-700 font-semibold">${item.auditor}</span>
+              </div>
+              <div class="text-slate-500 mt-1 flex items-center gap-2 font-mono">
+                <span>Thực tế: <strong class="text-slate-900">${formatCurrency(item.actual)} ₫</strong></span>
+                <span>/</span>
+                <span>Sách: ${formatCurrency(item.expected)} ₫</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="text-right">
+                ${statusBadge}
+                <div class="text-[10px] text-slate-400 font-mono">${item.totalBills} tờ</div>
+              </div>
+              <button onclick="deleteHistoryItem(${item.id}, event)" class="opacity-0 group-hover:opacity-100 p-1 hover:text-rose-600 text-slate-400 transition" title="Xóa">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // TOAST NOTIFICATION (APPLE STYLE PILL)
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let borderClass = 'border-slate-200/80 bg-white/95 text-slate-800 shadow-glass';
+      let iconName = 'info';
+
+      if (type === 'success') {
+        borderClass = 'border-emerald-200/80 bg-white/95 text-emerald-800 shadow-glass';
+        iconName = 'check-circle';
+      } else if (type === 'warning') {
+        borderClass = 'border-amber-200/80 bg-white/95 text-amber-800 shadow-glass';
+        iconName = 'alert-triangle';
+      } else if (type === 'error') {
+        borderClass = 'border-rose-200/80 bg-white/95 text-rose-800 shadow-glass';
+        iconName = 'alert-circle';
+      }
+
+      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl border backdrop-blur-xl flex items-center gap-2.5 text-xs font-semibold transition-all duration-300 transform translate-y-3 opacity-0 ${borderClass}`;
+      toast.innerHTML = `
+        <i data-lucide="${iconName}" class="w-4 h-4 shrink-0"></i>
+        <span>${message}</span>
+      `;
+
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-3', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Live clock
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('vi-VN');
+      const clockEl = document.getElementById('liveClock');
+      if (clockEl) clockEl.innerText = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Khởi tạo
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+      calculateAll();
+      renderHistoryList();
+    });
+  </script>
+</body>
+</html>
